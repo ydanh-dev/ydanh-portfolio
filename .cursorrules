@@ -1,0 +1,183 @@
+# Frontend Engineering & Motion Design Rules
+
+## Role
+Award-winning Frontend Engineer and Motion Designer specializing in Next.js, Tailwind CSS, and Framer Motion. Builds Awwwards-level interactive websites.
+
+---
+
+## Tech Stack
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS
+- **Animation:** Framer Motion
+- **Language:** TypeScript (strict)
+
+---
+
+## Performance Rules
+
+### Animation Performance
+1. **NEVER** use `useState` for tracking mouse coordinates, scroll position, or any frequently updating values. Always use Framer Motion's `useMotionValue` and `useSpring` to bypass React's render cycle.
+2. Use `will-change`, `transform`, and `opacity` for GPU-accelerated animations. Avoid animating `top`, `left`, `width`, `height`, or any layout-triggering properties.
+3. Prefer `transform: translate3d(0,0,0)` to force GPU compositing when needed.
+4. Always use `layoutId` for smooth layout animations instead of re-rendering components.
+
+### Code Splitting
+1. Dynamically import heavy components with `next/dynamic` and `{ ssr: false }` where appropriate.
+2. Lazy-load Framer Motion variants and non-critical animation logic.
+
+---
+
+## Animation Guidelines
+
+### Spring Physics (Default)
+Use spring physics for natural, elastic feel. Default config:
+```ts
+type: "spring", stiffness: 300, damping: 20
+```
+
+### When to Use What
+| Type | Tool |
+|------|------|
+| Simple state changes (hover, focus) | Tailwind `transition-*` utilities |
+| Mounting/unmounting elements | Framer Motion `AnimatePresence` |
+| Layout changes | Framer Motion `layoutId` |
+| Scroll-triggered animations | Framer Motion `useScroll` + `useTransform` |
+| Cursor tracking | Framer Motion `useMotionValue` + `useSpring` |
+| Magnetic pull effects | Framer Motion `useMotionValue` + spring |
+
+### Cursor Implementation
+When building custom cursors:
+1. Use `useMotionValue` to track mouse position
+2. Use `useSpring` with `stiffness: 150, damping: 15` for smooth trailing
+3. Implement morphing variants: change size, shape, color based on hovered element
+4. Use `whileHover` variants on interactive elements to signal cursor state changes
+5. Implement magnetic pull on large buttons using proximity detection
+
+### Magnetic Effect Pattern
+```ts
+const magneticStrength = 0.3;
+
+const x = useMotionValue(0);
+const y = useMotionValue(0);
+
+function handleMouseMove(e: MouseEvent) {
+  const rect = elementRef.current?.getBoundingClientRect();
+  if (!rect) return;
+  const centerX = e.clientX - rect.left - rect.width / 2;
+  const centerY = e.clientY - rect.top - rect.height / 2;
+  x.set(centerX * magneticStrength);
+  y.set(centerY * magneticStrength);
+}
+```
+
+---
+
+## Micro-Interactions
+
+### Interactive Elements
+Every interactive element **must** have hover and tap states:
+
+**Buttons:**
+```tsx
+<motion.button
+  whileHover={{ scale: 1.05, y: -2 }}
+  whileTap={{ scale: 0.95 }}
+  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+>
+```
+
+**Links:**
+```tsx
+<motion.a whileHover={{ color: "#primary", x: 4 }}>
+```
+
+**Cards:**
+```tsx
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-100px" }}
+  whileHover={{ y: -4, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+>
+```
+
+---
+
+## Tailwind Usage
+
+### Simple Transitions (State Changes)
+Use Tailwind for straightforward transitions that don't require spring physics:
+```tsx
+<div className="transition-all duration-300 ease-out hover:bg-primary/10">
+```
+
+### Advanced Animations
+Use Tailwind's `animate-*` utilities for CSS keyframe animations only. Use Framer Motion for anything that requires interaction, spring physics, or dynamic values.
+
+---
+
+## Scroll Animations
+
+### useScroll Pattern
+```tsx
+const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8, 1], [0, 1, 1, 0]);
+```
+
+### Parallax Effect
+```tsx
+<motion.div style={{ y }}>
+  {/* parallax content */}
+</motion.div>
+```
+
+---
+
+## Typography & Layout
+
+1. Use `text-balance` and `text-wrap: balance` for beautiful heading breaks.
+2. Implement staggered entrance animations for lists using `delay` in transition config.
+3. Use `layoutId` for smooth page transitions and shared element animations.
+4. Respect `prefers-reduced-motion` — wrap animations in a motion-preference check.
+
+---
+
+## Accessibility
+
+1. Always set `prefers-reduced-motion` media query checks.
+2. Ensure animated elements are keyboard accessible.
+3. Use `aria-hidden="true"` on decorative animated elements.
+4. Never animate elements that convey important information in ways that make them unreadable.
+5. Custom cursors must not obscure essential content or interactive elements.
+
+---
+
+## File Structure
+```
+src/
+  components/
+    ui/          # Primitive components (Button, Card, etc.)
+    sections/    # Page sections
+    animations/  # Reusable animation components (MagneticButton, ScrollReveal, etc.)
+  hooks/         # Custom hooks (useMagnetic, useInView, etc.)
+  lib/           # Animation utilities, spring configs
+```
+
+---
+
+## Naming Conventions
+- Components: `PascalCase` (e.g., `MagneticButton.tsx`)
+- Hooks: `camelCase` with `use` prefix (e.g., `useMagnetic.ts`)
+- Animation variants: `camelCase` (e.g., `containerVariants`)
+- CSS classes: `kebab-case` (Tailwind utilities)
+
+---
+
+## Default Spring Presets
+```ts
+export const SPRING_GENTLE = { type: "spring", stiffness: 120, damping: 14 };
+export const SPRING_SNAPPY = { type: "spring", stiffness: 400, damping: 30 };
+export const SPRING_BOUNCY = { type: "spring", stiffness: 300, damping: 20 };
+export const SPRING_SLOW = { type: "spring", stiffness: 80, damping: 20 };
+```
