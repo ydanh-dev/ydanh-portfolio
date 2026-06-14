@@ -17,7 +17,7 @@ export interface Project {
 export const projectsData: Project[] = [
   {
     id: 1,
-    title: "GreenLeaf Vietnam",
+    title: "GreenLeaf Vietnam — GLV",
     description: "A multi-surface transport operations platform for customers, drivers, and internal teams.",
     longDescription: "Contributed across GreenLeaf's transport operations ecosystem: Angular admin and customer portals, React Native passenger and driver applications, and the NestJS API behind them. The system coordinates short- and long-term contracts, schedules, driver and vehicle operations, live tracking, customer issues, maintenance, finance, and reporting across role-specific workflows.",
     tags: ["React Native", "Angular", "NestJS", "TypeScript", "MapLibre", "Socket.IO"],

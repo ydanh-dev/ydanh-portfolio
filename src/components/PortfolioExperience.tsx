@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { type MouseEvent, type PointerEvent, useEffect, useLayoutEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import dynamic from "next/dynamic";
+import { type MouseEvent, type PointerEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -10,12 +11,20 @@ import {
   Braces,
   Check,
   Copy,
+  Database,
+  Gauge,
+  Layers3,
   Menu,
   MoveUpRight,
+  Network,
+  RotateCcw,
+  Smartphone,
   X,
 } from "lucide-react";
 import { projectsData, type Project } from "@/data/projects";
 import styles from "./PortfolioExperience.module.css";
+
+const ArchitectureScene = dynamic(() => import("./ArchitectureScene"), { ssr: false });
 
 const rise = {
   hidden: { opacity: 0, y: 42, filter: "blur(10px)" },
@@ -34,26 +43,61 @@ const projectLine = {
   exit: { opacity: 0, y: -10, filter: "blur(5px)", transition: { duration: .18 } },
 };
 
-const capabilities = [
-  ["01", "Mobile systems", "React Native and Flutter products designed around complex operational workflows."],
-  ["02", "Product engineering", "From an ambiguous requirement to a dependable feature that can be shipped and measured."],
-  ["03", "Performance", "Responsive interfaces, predictable state, and fewer expensive renders on real devices."],
-  ["04", "Integration", "APIs, maps, payments, device capabilities, and enterprise systems working as one product."],
+const approachSteps = [
+  {
+    number: "01",
+    label: "Understand",
+    code: "problem → constraints",
+    title: "Find the operational pressure.",
+    description: "Map who is doing the work, where the flow breaks, and what must still work on a busy day.",
+    output: ["User and role map", "Failure states", "Delivery boundary"],
+  },
+  {
+    number: "02",
+    label: "Shape",
+    code: "flow → interface",
+    title: "Make the complex flow legible.",
+    description: "Turn dense business rules into a compact interface with clear decisions and progressive disclosure.",
+    output: ["Task-first flow", "State model", "Interaction prototype"],
+  },
+  {
+    number: "03",
+    label: "Engineer",
+    code: "UI ↔ state ↔ API",
+    title: "Connect the whole product system.",
+    description: "Design predictable state, resilient API contracts, device integrations, and performance budgets together.",
+    output: ["API contracts", "State ownership", "Performance budget"],
+  },
+  {
+    number: "04",
+    label: "Release",
+    code: "test → observe → improve",
+    title: "Ship with evidence, not hope.",
+    description: "Validate edge cases, release deliberately, observe real behavior, and feed the learning into the next iteration.",
+    output: ["Release checklist", "Regression coverage", "Iteration signals"],
+  },
 ];
 
 const history = [
-  ["2023 — NOW", "Apetech Solutions", "Mobile Engineer", "Own mobile features from interface decisions through API integration, testing, release, and iteration."],
-  ["2022 — 2023", "Apetech Solutions", "Software Tester", "Built the quality instincts that now shape how every feature is designed and delivered."],
-  ["2022", "Kyanon Digital", "Front-end Developer", "Translated enterprise workflows into responsive, integrated interfaces."],
-  ["2022", "NATA Vietnam", "Flutter Developer", "Learned cross-platform fundamentals by shipping real application flows."],
+  ["2023 — NOW", "Apetech Solutions", "Mobile Engineer", "Product ownership", "Own mobile features from interface decisions through API integration, testing, release, and iteration."],
+  ["2022 — 2023", "Apetech Solutions", "Software Tester", "Quality systems", "Built the quality instincts that now shape how every feature is designed and delivered."],
+  ["2022", "Kyanon Digital", "Front-end Developer", "Interface systems", "Translated enterprise workflows into responsive, integrated interfaces."],
+  ["2022", "NATA Vietnam", "Flutter Developer", "Mobile foundation", "Learned cross-platform fundamentals by shipping real application flows."],
 ];
 
 const stack = ["React Native", "TypeScript", "Flutter", "Next.js", "React Query", "Zustand", "REST APIs", "Maps", "CI/CD", "Product thinking"];
+const technicalSignals = [
+  ["60 FPS", "Interaction budget", "Treat smoothness as a product constraint, not final polish.", Gauge],
+  ["4 surfaces", "System thinking", "Work across mobile, web, API, and operational services.", Layers3],
+  ["Offline-aware", "Field resilience", "Plan for older devices, weak networks, and imperfect data.", Smartphone],
+  ["Typed contracts", "Integration discipline", "Keep state and API boundaries explicit and predictable.", Network],
+];
 
 export default function PortfolioExperience() {
   const [entering, setEntering] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeProject, setActiveProject] = useState(0);
+  const [activeApproach, setActiveApproach] = useState(0);
   const [activeSection, setActiveSection] = useState("top");
   const [copied, setCopied] = useState(false);
   const project = projectsData[activeProject];
@@ -207,7 +251,7 @@ export default function PortfolioExperience() {
             <motion.span variants={rise}>the real world.</motion.span>
           </h1>
         </motion.div>
-        <ProductKernel />
+        <ProductKernel active={activeApproach} onSelect={setActiveApproach} />
         <ScrollReveal className={styles.heroBottom} amount={.2}>
           <p>
             Nguyen Anh Duy is a mobile and front-end engineer focused on turning complicated
@@ -261,7 +305,7 @@ export default function PortfolioExperience() {
               <ProjectVisual project={project} index={activeProject} />
               <motion.div className={styles.projectCopy} variants={projectCopy} initial="hidden" animate="show" exit="exit">
                 <motion.div variants={projectLine}><span>{"// case-study."}0{activeProject + 1}</span><span>{project.year}</span></motion.div>
-                <motion.h3 variants={projectLine}>{project.title}</motion.h3>
+                <motion.h3 variants={projectLine}><ProjectTitle title={project.title} /></motion.h3>
                 <motion.div variants={projectLine} className={styles.contextBlock}>
                   <span>{"// context"}</span>
                   <p>{project.longDescription}</p>
@@ -280,18 +324,57 @@ export default function PortfolioExperience() {
       </section>
 
       <section id="approach" className={styles.approach}>
-        <SectionHead number="02" eyebrow="how-i-contribute" title="Not only code. The judgment around it." light />
-        <ScrollReveal className={styles.capabilityGrid} amount={.15}>
-          {capabilities.map(([number, title, description], index) => (
-            <motion.article key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: index * 0.05 }}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{description}</p>
-              <i />
+        <SectionHead number="02" eyebrow="how-i-contribute" title="Not only code. The judgment around it." light gentle />
+        <ScrollReveal className={styles.approachWorkbench} amount={.15} gentle>
+          <div className={styles.approachRail}>
+            <span>{"// select a stage"}</span>
+            {approachSteps.map((step, index) => (
+              <button key={step.number} type="button" onClick={() => setActiveApproach(index)} className={activeApproach === index ? styles.activeApproach : ""}>
+                <b>{step.number}</b>
+                <span>{step.label}</span>
+                <small>{step.code}</small>
+                <i />
+              </button>
+            ))}
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.article
+              key={activeApproach}
+              className={styles.approachDetail}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: .3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div><span>{"// working-method."}{approachSteps[activeApproach].number}</span><b>{approachSteps[activeApproach].code}</b></div>
+              <h3>{approachSteps[activeApproach].title}</h3>
+              <p>{approachSteps[activeApproach].description}</p>
+              <footer>
+                <span>Expected output</span>
+                {approachSteps[activeApproach].output.map((item) => <strong key={item}>{item}</strong>)}
+              </footer>
             </motion.article>
-          ))}
+          </AnimatePresence>
         </ScrollReveal>
-        <ScrollReveal className={styles.statement} amount={.3}>
+        <ScrollReveal className={styles.technicalLab} amount={.1} gentle>
+          <div className={styles.technicalCopy}>
+            <span>{"// technical-proof"}</span>
+            <h3>Engineering decisions made visible.</h3>
+            <p>These are the constraints I use to evaluate whether an interface is actually ready for production.</p>
+            <div className={styles.signalGrid}>
+              {technicalSignals.map(([value, label, description, Icon]) => (
+                <article key={String(label)}>
+                  <Icon size={18} />
+                  <b>{String(value)}</b>
+                  <span>{String(label)}</span>
+                  <p>{String(description)}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <ArchitectureModel />
+        </ScrollReveal>
+        <ScrollReveal className={styles.statement} amount={.3} gentle>
           <span>My default question</span>
           <p>“What does this feel like on a busy day, on an older phone, with imperfect data?”</p>
           <Asterisk size={44} />
@@ -299,19 +382,22 @@ export default function PortfolioExperience() {
       </section>
 
       <section id="history" className={styles.history}>
-        <SectionHead number="03" eyebrow="professional-history" title="A quality-first path into product engineering." />
-        <ScrollReveal className={styles.historyGrid} amount={.1}>
-          <motion.aside initial={{ opacity: 0, rotate: -2, y: 30 }} whileInView={{ opacity: 1, rotate: 0, y: 0 }} viewport={{ once: true, amount: .35 }} transition={{ duration: .7, ease: [0.22, 1, 0.36, 1] }}>
-            <span>Current focus</span>
+        <SectionHead number="03" eyebrow="professional-history" title="A quality-first path into product engineering." gentle />
+        <ScrollReveal className={styles.historyGrid} amount={.1} gentle>
+          <motion.aside initial={{ opacity: .7, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .35 }} transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}>
+            <span>Progression, not a title list</span>
             <h3>Mobile products for operational teams.</h3>
-            <p>Cross-platform applications with dense business rules, connected services, and a high bar for clarity.</p>
+            <p>Testing built the quality lens. Front-end work built the interface lens. Mobile engineering brought both into end-to-end product ownership.</p>
+            <div className={styles.progression}>
+              <span>Quality</span><i /><span>Interface</span><i /><span>Ownership</span>
+            </div>
             <div className={styles.stackCloud}>{stack.map((item) => <span key={item}>{item}</span>)}</div>
           </motion.aside>
           <div className={styles.timeline}>
-            {history.map(([period, company, role, description], index) => (
-              <motion.article key={`${company}-${role}`} initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }}>
+            {history.map(([period, company, role, lens, description], index) => (
+              <motion.article key={`${company}-${role}`} initial={{ opacity: .65, x: 7 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: .48, delay: index * 0.035, ease: [0.22, 1, 0.36, 1] }}>
                 <span>{period}</span>
-                <div><small>{company}</small><h3>{role}</h3><p>{description}</p></div>
+                <div><small>{company}</small><h3>{role}</h3><em>{lens}</em><p>{description}</p></div>
                 <b>0{history.length - index}</b>
               </motion.article>
             ))}
@@ -336,62 +422,127 @@ export default function PortfolioExperience() {
   );
 }
 
-function ProductKernel() {
-  const [mode, setMode] = useState(0);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mapX = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), { stiffness: 150, damping: 22 });
-  const mapY = useSpring(useTransform(y, [-0.5, 0.5], [-6, 6]), { stiffness: 150, damping: 22 });
-  const modes = [
-    { name: "Understand", code: "problem → flow", description: "Turn real operational friction into a clear product direction." },
-    { name: "Engineer", code: "UI ↔ state ↔ API", description: "Connect interface, application state, and services into one system." },
-    { name: "Ship", code: "test → release", description: "Validate edge cases, release deliberately, and improve from feedback." },
-  ];
-  const nodes = [
-    ["01", "Problem"],
-    ["02", "Interface"],
-    ["03", "API + State"],
-    ["04", "Release"],
-  ];
-  const activeMode = modes[mode];
-
-  const move = (event: PointerEvent<HTMLButtonElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    x.set((event.clientX - rect.left) / rect.width - 0.5);
-    y.set((event.clientY - rect.top) / rect.height - 0.5);
+function ProductKernel({ active, onSelect }: { active: number; onSelect: (index: number) => void }) {
+  const inspectApproach = (index: number) => {
+    onSelect(index);
+    document.getElementById("approach")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <button
-      type="button"
-      className={styles.kernelStage}
-      onPointerMove={move}
-      onPointerLeave={() => { x.set(0); y.set(0); }}
-      onClick={() => setMode((current) => (current + 1) % modes.length)}
-      aria-label={`Product lifecycle: ${activeMode.name}. Click for the next stage.`}
-    >
-      <span className={styles.kernelGuide}>{"// interactive system map"}</span>
-      <motion.span className={styles.systemMap} style={{ x: mapX, y: mapY }}>
+    <div className={styles.kernelStage}>
+      <span className={styles.kernelGuide}>{"// select a stage · click again to inspect"}</span>
+      <span className={styles.systemMap}>
         <i className={styles.systemPath} />
-        {nodes.map(([number, label], index) => (
-          <motion.span
-            key={label}
-            className={`${styles.systemNode} ${index === mode + 1 ? styles.systemNodeActive : ""}`}
-            animate={index === mode + 1 ? { scale: [1, 1.08, 1] } : { scale: 1 }}
-            transition={{ duration: .55 }}
+        <motion.i className={styles.systemProgress} animate={{ scaleX: active / (approachSteps.length - 1) }} transition={{ duration: .48, ease: [0.22, 1, 0.36, 1] }} />
+        {approachSteps.map((step, index) => (
+          <motion.button
+            type="button"
+            key={step.label}
+            className={`${styles.systemNode} ${index === active ? styles.systemNodeActive : ""} ${index < active ? styles.systemNodeDone : ""}`}
+            onClick={() => active === index ? inspectApproach(index) : onSelect(index)}
+            aria-label={`${step.label}: ${step.description}`}
           >
-            <b>{number}</b>
-            <strong>{label}</strong>
-          </motion.span>
+            <b>{step.number}</b>
+            <strong>{step.label}</strong>
+          </motion.button>
         ))}
-        <span className={styles.systemPulse} />
-      </motion.span>
-      <span className={styles.kernelMode}>
-        <b>{activeMode.name} / 0{mode + 1}</b>
-        <i>{activeMode.code}</i>
-        <small>{activeMode.description}</small>
       </span>
-    </button>
+      <AnimatePresence mode="wait">
+        <motion.span key={active} className={styles.kernelMode} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: .24 }}>
+          <b>{approachSteps[active].label} / {approachSteps[active].number}</b>
+          <i>{approachSteps[active].code}</i>
+          <small>{approachSteps[active].description}</small>
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function ProjectTitle({ title }: { title: string }) {
+  const [name, suffix] = title.split(" — ");
+  return (
+    <>
+      <span>{name}</span>
+      {suffix && <span>— {suffix}</span>}
+    </>
+  );
+}
+
+function ArchitectureModel() {
+  const [activeLayer, setActiveLayer] = useState(1);
+  const [sceneVersion, setSceneVersion] = useState(0);
+  const [sceneVisible, setSceneVisible] = useState(false);
+  const [demoPaused, setDemoPaused] = useState(false);
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const demoResume = useRef<number | null>(null);
+  const reduceMotion = useReducedMotion();
+  const layers = [
+    { label: "Interface", detail: "React Native · responsive UI", responsibility: "Keep dense operational work clear, fast, and reachable on real devices.", tools: ["React Native", "Design systems", "Accessibility"], signals: ["Interaction FPS", "Task completion", "Input latency"], failure: "A polished screen that slows the actual job.", Icon: Smartphone },
+    { label: "State", detail: "Predictable client state", responsibility: "Make server, workflow, and temporary UI state explicit instead of letting them drift together.", tools: ["React Query", "Zustand", "MobX"], signals: ["Cache correctness", "Render count", "Recovery paths"], failure: "Stale data and invisible state transitions.", Icon: Layers3 },
+    { label: "Services", detail: "Typed APIs · integrations", responsibility: "Connect product surfaces through resilient contracts and observable integration boundaries.", tools: ["NestJS", "REST APIs", "Socket.IO"], signals: ["Error shape", "Retry behavior", "Contract stability"], failure: "Generic errors that hide the real operational cause.", Icon: Network },
+    { label: "Data", detail: "Persistence · offline strategy", responsibility: "Preserve user intent through weak networks, interrupted tasks, and imperfect source data.", tools: ["PostgreSQL", "Offline queues", "Validation"], signals: ["Sync integrity", "Conflict handling", "Data quality"], failure: "Losing work when the environment is least reliable.", Icon: Database },
+  ];
+  const selected = layers[activeLayer];
+  const SelectedIcon = selected.Icon;
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setSceneVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: .35 });
+    observer.observe(scene);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => () => {
+    if (demoResume.current) window.clearTimeout(demoResume.current);
+  }, []);
+
+  const pauseDemo = () => {
+    setDemoPaused(true);
+    if (demoResume.current) window.clearTimeout(demoResume.current);
+    demoResume.current = window.setTimeout(() => setDemoPaused(false), 4500);
+  };
+
+  const selectArchitectureLayer = (index: number) => {
+    setActiveLayer(index);
+    pauseDemo();
+  };
+
+  useEffect(() => {
+    const resumeOutsideScene = (event: globalThis.PointerEvent) => {
+      if (sceneRef.current?.contains(event.target as Node)) return;
+      if (demoResume.current) window.clearTimeout(demoResume.current);
+      setDemoPaused(false);
+    };
+    window.addEventListener("pointerdown", resumeOutsideScene);
+    return () => window.removeEventListener("pointerdown", resumeOutsideScene);
+  }, []);
+
+  return (
+    <div className={styles.architecture}>
+      <div className={styles.architectureTop}>
+        <span>{"// interactive architecture"}</span>
+        <button type="button" onClick={() => setSceneVersion((version) => version + 1)}><RotateCcw size={13} /> Reset camera</button>
+      </div>
+      <div ref={sceneRef} className={styles.architectureScene}>
+        <span className={styles.dragGuide}>{sceneVisible ? "Drag scene to orbit · scroll to zoom · select a layer" : "Initializing connected system"}</span>
+        {sceneVisible && <ArchitectureScene key={sceneVersion} activeLayer={activeLayer} onSelect={setActiveLayer} onLayerSelect={selectArchitectureLayer} reduceMotion={Boolean(reduceMotion)} paused={demoPaused} />}
+      </div>
+      <AnimatePresence mode="wait">
+        <motion.article className={styles.layerDetail} key={activeLayer} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}>
+          <header><SelectedIcon size={18} /><div><b>{selected.label}</b><span>{selected.detail}</span></div><i>0{activeLayer + 1}</i></header>
+          <p>{selected.responsibility}</p>
+          <div><span>{"// tools"}</span>{selected.tools.map((item) => <strong key={item}>{item}</strong>)}</div>
+          <div><span>{"// signals"}</span>{selected.signals.map((item) => <strong key={item}>{item}</strong>)}</div>
+          <footer><span>{"// failure-mode"}</span><p>{selected.failure}</p></footer>
+        </motion.article>
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -425,7 +576,7 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
       <motion.div className={styles.projectLogoFrame} style={{ x: imageX, y: imageY, position: "absolute" }}>
         {project.imageUrl ? <Image src={project.imageUrl} alt={`${project.title} logo`} fill sizes="(max-width: 900px) 70vw, 35vw" className={styles.projectImage} /> : <div className={styles.projectFallback}>APP / {project.year}</div>}
       </motion.div>
-      <motion.div className={styles.projectScan} initial={{ x: "-120%" }} animate={{ x: "340%" }} transition={{ duration: 1.1, delay: .18, ease: [0.22, 1, 0.36, 1] }} />
+      <motion.div className={styles.projectAccentLine} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: .75, delay: .2, ease: [0.22, 1, 0.36, 1] }} />
       <div className={styles.projectVisualMeta}><span>0{index + 1} / 04</span><span>{project.surfaces.length} connected surfaces</span><span>{project.year}</span></div>
       <b className={styles.projectNumber}>0{index + 1}</b>
     </motion.div>
@@ -446,25 +597,29 @@ function InteractiveProject({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SectionHead({ number, eyebrow, title, light = false }: { number: string; eyebrow: string; title: string; light?: boolean }) {
+function SectionHead({ number, eyebrow, title, light = false, gentle = false }: { number: string; eyebrow: string; title: string; light?: boolean; gentle?: boolean }) {
+  const headingRise = gentle
+    ? { hidden: { opacity: .6, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: .55, ease: [0.22, 1, 0.36, 1] as const } } }
+    : rise;
+
   return (
-    <motion.header initial="hidden" whileInView="show" viewport={{ once: true, amount: .35 }} variants={{ show: { transition: { staggerChildren: .09 } } }} className={`${styles.sectionHead} ${light ? styles.light : ""}`}>
-      <motion.span variants={rise}>{number}</motion.span>
-      <motion.p variants={rise}>{eyebrow}</motion.p>
-      <motion.h2 variants={rise}>{title}</motion.h2>
-      <motion.div variants={rise}><Asterisk size={22} /></motion.div>
+    <motion.header initial="hidden" whileInView="show" viewport={{ once: true, amount: .35 }} variants={{ show: { transition: { staggerChildren: gentle ? .045 : .09 } } }} className={`${styles.sectionHead} ${light ? styles.light : ""}`}>
+      <motion.span variants={headingRise}>{number}</motion.span>
+      <motion.p variants={headingRise}>{eyebrow}</motion.p>
+      <motion.h2 variants={headingRise}>{title}</motion.h2>
+      <motion.div variants={headingRise}><Asterisk size={22} /></motion.div>
     </motion.header>
   );
 }
 
-function ScrollReveal({ children, className, amount = .2 }: { children: React.ReactNode; className?: string; amount?: number }) {
+function ScrollReveal({ children, className, amount = .2, gentle = false }: { children: React.ReactNode; className?: string; amount?: number; gentle?: boolean }) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 48, filter: "blur(8px)" }}
+      initial={gentle ? { opacity: .72, y: 14 } : { opacity: 0, y: 48, filter: "blur(8px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount }}
-      transition={{ duration: .72, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: gentle ? .58 : .72, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
