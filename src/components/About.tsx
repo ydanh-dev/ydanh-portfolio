@@ -1,32 +1,29 @@
 import Image from "next/image";
-import { ArrowRight, Braces, Layers3, Rocket, ShieldCheck } from "lucide-react";
+import { ArrowRight, Code2, Zap, Target } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
-const workflow = ["Discover", "Architect", "Build", "Integrate", "Test", "Ship"];
-
 const disciplines = [
-  { icon: Layers3, label: "Product UI", value: "Mobile-first workflows", level: "94%" },
-  { icon: Braces, label: "Engineering", value: "State, API & architecture", level: "90%" },
-  { icon: ShieldCheck, label: "Quality", value: "Edge cases & release confidence", level: "86%" },
+  { icon: Code2, label: "Architecture", value: "System design & scalability", level: "94%" },
+  { icon: Zap, label: "Performance", value: "Optimization & responsiveness", level: "90%" },
+  { icon: Target, label: "Quality", value: "Testing & production readiness", level: "86%" },
 ];
 
-const stack = ["React Native", "Flutter", "TypeScript", "Next.js", "React Query", "Zustand", "REST APIs", "Firebase"];
+const workflow = ["Design", "Develop", "Test", "Deploy", "Monitor"];
 
 export default function About() {
   return (
     <section id="about" className="engineering-section border-y border-white/5 py-16 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <AnimatedSection className="mb-9 grid gap-5 sm:mb-12 sm:gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <AnimatedSection className="mb-12 grid gap-5 sm:mb-16 sm:gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="section-kicker">engineering-profile</p>
+            <p className="section-kicker">about-me</p>
             <h2 className="mt-4 text-3xl font-black tracking-[-0.05em] text-white sm:text-5xl">
-              More than screens.
-              <span className="block text-gradient text-gradient-live">I build the system behind them.</span>
+              Full-stack mobile
+              <span className="block text-gradient text-gradient-live">& web engineer.</span>
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-            I work across the full product loop: understanding operational problems, shaping interfaces,
-            integrating APIs, managing state, testing edge cases, and improving the experience after release.
+            I build production-ready systems from concept to deployment. Experienced in architecting scalable mobile apps, optimizing performance, and shipping features that users love.
           </p>
         </AnimatedSection>
 
@@ -50,10 +47,10 @@ export default function About() {
               <div className="relative px-4 pb-5 pt-8 sm:px-6 sm:pb-6 sm:pt-11">
                 <div className="mb-6 text-center">
                   <h3 className="text-2xl font-black tracking-tight text-white">Nguyen Anh Duy</h3>
-                  <p className="mt-2 break-words font-mono text-[10px] text-indigo-300 sm:text-xs">mobile_developer + product_engineer</p>
+                  <p className="mt-2 break-words font-mono text-[10px] text-indigo-300 sm:text-xs">Mobile Engineer • Product Developer</p>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  {["Mobile", "Frontend", "Quality"].map((item, index) => (
+                  {["Mobile", "Frontend", "Backend"].map((item, index) => (
                     <div key={item} className="rounded-xl border border-white/8 bg-black/25 p-3 text-center">
                       <p className="font-mono text-[10px] text-zinc-500">0{index + 1}</p>
                       <p className="mt-1 text-xs font-bold text-zinc-200">{item}</p>
@@ -69,15 +66,15 @@ export default function About() {
               <article className="workflow-panel overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.025] p-5 sm:p-6">
                 <div className="mb-7 flex items-center justify-between gap-4">
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">{"// delivery-pipeline"}</p>
-                    <h3 className="mt-2 text-lg font-bold text-white">From problem to production</h3>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">{"// development-cycle"}</p>
+                    <h3 className="mt-2 text-lg font-bold text-white">How I work</h3>
                   </div>
-                  <Rocket className="size-5 text-indigo-300" />
+                  <Code2 className="size-5 text-indigo-300" />
                 </div>
-                <div className="workflow-track grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="workflow-track grid grid-cols-2 gap-3 sm:grid-cols-5">
                   {workflow.map((item, index) => (
                     <div key={item} className="workflow-step relative rounded-xl border border-white/8 bg-black/20 px-3 py-3">
-                      <span className="font-mono text-[9px] text-indigo-300">step_0{index + 1}</span>
+                      <span className="font-mono text-[9px] text-indigo-300">step_{String(index + 1).padStart(2, '0')}</span>
                       <p className="mt-1 text-xs font-bold text-zinc-200">{item}</p>
                     </div>
                   ))}
@@ -88,7 +85,7 @@ export default function About() {
             <div className="grid gap-5 sm:grid-cols-[1.15fr_0.85fr]">
               <AnimatedSection delay={0.06}>
                 <article className="h-full rounded-[2rem] border border-white/10 bg-white/[0.025] p-5">
-                  <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Capability matrix</p>
+                  <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Core Competencies</p>
                   <div className="space-y-5">
                     {disciplines.map((item) => (
                       <div key={item.label}>
@@ -108,12 +105,12 @@ export default function About() {
 
               <AnimatedSection delay={0.1}>
                 <article className="stack-orbit relative h-full min-h-64 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b0b15] p-5">
-                  <p className="relative z-10 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Core stack</p>
+                  <p className="relative z-10 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Primary Stack</p>
                   <div className="relative z-10 mt-7 flex flex-wrap gap-2">
-                    {stack.map((item) => <span key={item} className="stack-chip rounded-lg border border-white/8 bg-black/30 px-2.5 py-1.5 font-mono text-[10px] text-zinc-400">{item}</span>)}
+                    {["React Native", "Flutter", "TypeScript", "Next.js", "Zustand", "REST APIs"].map((item) => <span key={item} className="stack-chip rounded-lg border border-white/8 bg-black/30 px-2.5 py-1.5 font-mono text-[10px] text-zinc-400">{item}</span>)}
                   </div>
                   <div className="absolute bottom-5 left-5 right-5 flex items-center gap-2 font-mono text-[10px] text-emerald-300">
-                    <span className="status-pulse size-1.5 rounded-full bg-emerald-400" /> continuously learning <ArrowRight className="ml-auto size-3" />
+                    <span className="status-pulse size-1.5 rounded-full bg-emerald-400" /> actively shipping <ArrowRight className="ml-auto size-3" />
                   </div>
                 </article>
               </AnimatedSection>

@@ -14,6 +14,7 @@ import {
   Terminal,
   View,
   Zap,
+  Mail,
 } from "lucide-react";
 
 const stack = ["React Native", "Flutter", "TypeScript", "Next.js", "REST APIs"];
@@ -61,27 +62,26 @@ export default function Hero() {
             <Code2 className="size-3.5" /> <TypewriterText text="NGUYEN ANH DUY - Mobile & Front-end Developer" />
           </p>
           <h1 className="hero-enter hero-delay-2 max-w-full text-[2.55rem] font-black leading-[0.98] tracking-[-0.06em] text-white min-[430px]:text-5xl sm:text-7xl lg:text-[5.35rem]">
-            Crafting Seamless
-            <span className="text-gradient text-gradient-live block"> Mobile & Web Experiences.</span>
+            Building Production
+            <span className="text-gradient text-gradient-live block"> Mobile & Web Systems.</span>
           </h1>
           <p className="hero-enter hero-delay-3 mt-5 max-w-2xl text-sm leading-6 text-zinc-400 sm:mt-7 sm:text-lg sm:leading-7">
-            Nguyen Anh Duy builds production mobile products, expressive interfaces,
-            and the performance details that turn everyday workflows into good software.
+            I craft high-performance mobile applications and web experiences. Specialized in React Native, Flutter, and full-stack JavaScript. Focused on shipping production-ready systems with clean architecture and exceptional performance.
           </p>
 
           <div className="dev-command hero-enter hero-delay-3 mt-6 flex max-w-xl items-center gap-3 rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 font-mono text-[10px] sm:text-xs">
             <span className="text-emerald-300">$</span>
-            <span className="text-zinc-500">npx portfolio</span>
-            <span className="text-amber-300">--ship-production</span>
+            <span className="text-zinc-500">npm run build</span>
+            <span className="text-amber-300">--production</span>
             <span className="terminal-caret ml-auto h-3 w-1 bg-indigo-300" />
           </div>
 
           <div className="hero-enter hero-delay-4 mt-7 grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3">
             <a href="#contact" className="magnetic-button group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl bg-white px-2 py-3 text-center text-[11px] font-bold text-zinc-950 sm:px-5 sm:text-sm">
-              <span className="font-mono">Contact Me</span>
+              <span className="font-mono">Get in touch</span>
               <ArrowDownRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
             </a>
-            <a href="/cv.pdf" target="_blank" rel="noreferrer" className="group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-[11px] font-semibold text-zinc-200 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8 sm:px-5 sm:text-sm">
+            <a href="/NGUYEN_ANH_DUY_CV.pdf" target="_blank" rel="noreferrer" className="group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-[11px] font-semibold text-zinc-200 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8 sm:px-5 sm:text-sm">
               <Download className="size-4 transition-transform group-hover:-translate-y-0.5" /> <span className="font-mono">Download CV</span>
             </a>
           </div>
@@ -105,6 +105,20 @@ export default function Hero() {
                 <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.12em] text-zinc-600 sm:text-[9px]">{label}</p>
               </div>
             ))}
+          </div>
+
+          {/* Social Links */}
+          <div className="hero-enter hero-delay-4 mt-7 flex items-center gap-3 border-t border-white/8 pt-5">
+            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Connect:</p>
+            <a href="https://github.com" target="_blank" rel="noreferrer" className="group p-2 rounded-lg border border-white/10 hover:border-indigo-400/30 hover:bg-indigo-400/8 transition-colors">
+              <svg className="size-4 text-zinc-400 group-hover:text-indigo-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="group p-2 rounded-lg border border-white/10 hover:border-indigo-400/30 hover:bg-indigo-400/8 transition-colors">
+              <svg className="size-4 text-zinc-400 group-hover:text-indigo-300" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.946v5.441h-3.554s.05-8.736 0-9.646h3.554v1.364c.429-.659 1.191-1.599 2.896-1.599 2.117 0 3.704 1.385 3.704 4.362v5.519zM5.337 9.432c-1.144 0-1.915-.758-1.915-1.704 0-.951.768-1.703 1.959-1.703 1.188 0 1.914.752 1.939 1.703 0 .946-.751 1.704-1.983 1.704zm1.586 11.02H3.73V9.806h3.193v10.646zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+            </a>
+            <a href="mailto:duynguyen1bb@gmail.com" className="group p-2 rounded-lg border border-white/10 hover:border-indigo-400/30 hover:bg-indigo-400/8 transition-colors">
+              <Mail className="size-4 text-zinc-400 group-hover:text-indigo-300" />
+            </a>
           </div>
         </div>
 
@@ -140,15 +154,15 @@ export default function Hero() {
                   <span className="size-2 rounded-full bg-emerald-400/70" />
                 </div>
                 <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-500">
-                  <Radio className="size-3 text-emerald-400" /> runtime.live
+                  <Radio className="size-3 text-emerald-400" /> runtime.dev
                 </div>
               </div>
 
               <div className="p-4 sm:p-5">
                 <div className="mb-5 flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-indigo-300">{"// selected-environment"}</p>
-                    <h2 className="mt-1 text-xl font-black tracking-tight text-white">Mobile product engine</h2>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-indigo-300">{"// tech-stack"}</p>
+                    <h2 className="mt-1 text-xl font-black tracking-tight text-white">Production Ready</h2>
                   </div>
                   <div className="signal-bars flex h-7 items-end gap-1">
                     <span /><span /><span /><span />
@@ -156,13 +170,13 @@ export default function Hero() {
                 </div>
 
                 <div className="hero-code relative mb-4 overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025] p-3 sm:p-4">
-                  <div className="absolute right-3 top-3 font-mono text-[9px] text-zinc-600">build.tsx</div>
+                  <div className="absolute right-3 top-3 font-mono text-[9px] text-zinc-600">app.tsx</div>
                   <div className="space-y-2 font-mono text-[9px] sm:space-y-2.5 sm:text-[11px]">
-                    <CodeLine number="01"><span className="text-violet-300">const</span> product = <span className="text-cyan-300">createApp</span>({"{"}</CodeLine>
-                    <CodeLine number="02" indent><span className="text-zinc-300">platform:</span> <span className="text-amber-200">&quot;mobile&quot;</span>,</CodeLine>
-                    <CodeLine number="03" indent><span className="text-zinc-300">quality:</span> <span className="text-emerald-300">productionReady</span>,</CodeLine>
-                    <CodeLine number="04" indent><span className="text-zinc-300">experience:</span> <span className="text-pink-300">delightful</span>,</CodeLine>
-                    <CodeLine number="05">{"}"});<span className="terminal-caret ml-1 inline-block h-3 w-1.5 bg-indigo-300 align-middle" /></CodeLine>
+                    <CodeLine number="01"><span className="text-violet-300">export</span> <span className="text-cyan-300">const</span> developer = <span className="text-amber-200">{"{"}</span></CodeLine>
+                    <CodeLine number="02" indent><span className="text-zinc-300">skills:</span> <span className="text-emerald-300">["React Native", "Flutter", "TypeScript"]</span>,</CodeLine>
+                    <CodeLine number="03" indent><span className="text-zinc-300">focus:</span> <span className="text-pink-300">"production-ready systems"</span>,</CodeLine>
+                    <CodeLine number="04" indent><span className="text-zinc-300">experience:</span> <span className="text-amber-200">3</span> + <span className="text-amber-200">{"years"}</span>,</CodeLine>
+                    <CodeLine number="05"><span className="text-amber-200">{"}"}</span>;<span className="terminal-caret ml-1 inline-block h-3 w-1.5 bg-indigo-300 align-middle" /></CodeLine>
                   </div>
                 </div>
 
@@ -191,7 +205,7 @@ export default function Hero() {
                 </div>
 
                 <a href="#contact" className="group mt-4 flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.035] px-4 py-3 text-xs font-bold text-white transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8">
-                  Start a conversation <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  Start building <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </a>
               </div>
             </div>
