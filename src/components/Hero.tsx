@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   ArrowDownRight,
@@ -64,23 +64,23 @@ export default function Hero() {
             Building Production
             <span className="text-gradient text-gradient-live block"> Mobile & Web Systems.</span>
           </h1>
-          <p className="hero-enter hero-delay-3 mt-5 max-w-2xl text-sm leading-6 text-zinc-400 sm:mt-7 sm:text-lg sm:leading-7">
+          <p className="hero-enter hero-delay-3 mt-6 max-w-2xl text-sm leading-relaxed text-zinc-400 sm:mt-8 sm:text-lg sm:leading-8">
             I craft high-performance mobile applications and web experiences. Specialized in React Native, Flutter, and full-stack JavaScript. Focused on shipping production-ready systems with clean architecture and exceptional performance.
           </p>
 
-          <div className="dev-command hero-enter hero-delay-3 mt-6 flex max-w-xl items-center gap-3 rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 font-mono text-[10px] sm:text-xs">
+          <div className="dev-command hero-enter hero-delay-3 mt-8 flex max-w-xl items-center gap-3 rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 font-mono text-[10px] sm:text-xs">
             <span className="text-emerald-300">$</span>
             <span className="text-zinc-500">npm run build</span>
             <span className="text-amber-300">--production</span>
-            <span className="terminal-caret ml-auto h-3 w-1 bg-indigo-300" />
+            <span className="terminal-caret ml-1 h-3 w-1 bg-indigo-300" />
           </div>
 
-          <div className="hero-enter hero-delay-4 mt-7 grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3">
+          <div className="hero-enter hero-delay-4 mt-10 grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2 sm:mt-10 sm:flex sm:flex-wrap sm:gap-3">
             <a href="#contact" className="magnetic-button group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl bg-white px-2 py-3 text-center text-[11px] font-bold text-zinc-950 sm:px-5 sm:text-sm">
               <span className="font-mono">Get in touch</span>
               <ArrowDownRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
             </a>
-            <a href="/NGUYEN_ANH_DUY_CV.pdf" target="_blank" rel="noreferrer" className="group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-[11px] font-semibold text-zinc-200 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8 sm:px-5 sm:text-sm">
+            <a href="/NGUYEN%20ANH%20DUY_DEVELOPER_CV.pdf" target="_blank" rel="noreferrer" className="group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-[11px] font-semibold text-zinc-200 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8 sm:px-5 sm:text-sm">
               <Download className="size-4 transition-transform group-hover:-translate-y-0.5" /> <span className="font-mono">Download CV</span>
             </a>
           </div>
@@ -129,91 +129,52 @@ export default function Hero() {
             pointerY.set(0);
           }}
           style={{ rotateX, rotateY, transformPerspective: 1200 }}
-          className="hero-3d-stage hero-enter hero-delay-3 relative mx-auto w-full min-w-0 max-w-[29rem]"
+          className="hero-3d-stage hero-enter hero-delay-3 relative mx-auto w-full min-w-0 max-w-[30rem]"
         >
-          <div className="runtime-halo pointer-events-none absolute -inset-8 -z-10 rounded-[3rem]" />
-          <div className="hero-3d-orbit pointer-events-none absolute inset-6 rounded-[2.8rem]" />
-          <div className="hero-cube-wrap pointer-events-none absolute right-3 top-3 block sm:-right-2 sm:-top-7">
-            <div className="hero-cube">
-              {["front", "back", "right", "left", "top", "bottom"].map((face) => (
-                <span key={face} className={`hero-cube-face hero-cube-${face}`} />
-              ))}
-            </div>
-          </div>
+          {/* Subtle elegant background glows */}
+          <div className="absolute -inset-20 -z-10 rounded-full bg-indigo-500/10 blur-[100px]" />
+          <div className="absolute right-0 top-0 -z-10 h-64 w-64 rounded-full bg-cyan-500/10 blur-[80px]" />
+          
           <motion.div
             style={{ background: interactiveGlow }}
-            className="hero-3d-panel relative max-w-full overflow-hidden rounded-[2rem] border border-white/12 bg-[#090913]/95 p-2 shadow-[0_35px_100px_rgba(0,0,0,0.48)] sm:p-3"
+            className="relative max-w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#030303]/90 p-1.5 shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl"
           >
-            <div className="runtime-scan pointer-events-none absolute inset-x-0 top-0 h-32" />
-            <div className="relative min-w-0 overflow-hidden rounded-[1.2rem] border border-white/8 bg-[#07070d] sm:rounded-[1.4rem]">
-              <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+            {/* Inner Border / Glossy Layer */}
+            <div className="relative overflow-hidden rounded-[1.6rem] border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent">
+              
+              {/* Header Bar */}
+              <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.01] px-4 py-3">
                 <div className="flex items-center gap-2">
-                  <span className="size-2 rounded-full bg-rose-400/70" />
-                  <span className="size-2 rounded-full bg-amber-300/70" />
-                  <span className="size-2 rounded-full bg-emerald-400/70" />
+                  <span className="size-2.5 rounded-full border border-[#e0443e]/50 bg-[#ff5f57]" />
+                  <span className="size-2.5 rounded-full border border-[#d89f2c]/50 bg-[#febc2e]" />
+                  <span className="size-2.5 rounded-full border border-[#1aab29]/50 bg-[#28c840]" />
                 </div>
-                <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-500">
+                <div className="flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-zinc-400">
                   <Radio className="size-3 text-emerald-400" /> runtime.dev
                 </div>
               </div>
 
-              <div className="p-4 sm:p-5">
-                <div className="mb-5 flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-indigo-300">{"// tech-stack"}</p>
-                    <h2 className="mt-1 text-xl font-black tracking-tight text-white">Production Ready</h2>
-                  </div>
-                  <div className="signal-bars flex h-7 items-end gap-1">
-                    <span /><span /><span /><span />
-                  </div>
+              {/* Body */}
+              <div className="p-4 sm:p-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-black tracking-tight text-white">Production Ready</h2>
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-zinc-500">{"// Architecture & Tech Stack"}</p>
                 </div>
 
-                <div className="hero-code relative mb-4 overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025] p-3 sm:p-4">
-                  <div className="absolute right-3 top-3 font-mono text-[9px] text-zinc-600">app.tsx</div>
-                  <div className="space-y-2 font-mono text-[9px] sm:space-y-2.5 sm:text-[11px]">
-                    <CodeLine number="01"><span className="text-violet-300">export</span> <span className="text-cyan-300">const</span> developer = <span className="text-amber-200">{"{"}</span></CodeLine>
-                    <CodeLine number="02" indent><span className="text-zinc-300">skills:</span> <span className="text-emerald-300">[&quot;React Native&quot;, &quot;Flutter&quot;, &quot;TypeScript&quot;]</span>,</CodeLine>
-                    <CodeLine number="03" indent><span className="text-zinc-300">focus:</span> <span className="text-pink-300">&quot;production-ready systems&quot;</span>,</CodeLine>
-                    <CodeLine number="04" indent><span className="text-zinc-300">experience:</span> <span className="text-amber-200">3</span> + <span className="text-amber-200">{"years"}</span>,</CodeLine>
-                    <CodeLine number="05"><span className="text-amber-200">{"}"}</span>;<span className="terminal-caret ml-1 inline-block h-3 w-1.5 bg-indigo-300 align-middle" /></CodeLine>
-                  </div>
-                </div>
+                <TerminalProcess logs={logs} />
 
-                <div className="grid grid-cols-1 gap-3 min-[390px]:grid-cols-[1fr_auto]">
-                  <div className="rounded-2xl border border-white/8 bg-black/25 p-3">
-                    <div className="mb-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-widest text-zinc-500">
-                      <Terminal className="size-3" /> Output
-                    </div>
-                    <div className="space-y-2">
-                      {logs.map((log, index) => (
-                        <div key={log.label} style={{ animationDelay: `${0.5 + index * 0.15}s` }} className="log-line grid grid-cols-[auto_1fr_auto] items-center gap-2 font-mono text-[9px]">
-                          <span className="text-zinc-700">{log.time}</span>
-                          <span className="text-zinc-400">{log.label}</span>
-                          <span className={log.tone}>{log.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex min-h-20 flex-row items-center justify-between rounded-2xl border border-indigo-400/15 bg-indigo-400/6 p-3 min-[390px]:w-20 min-[390px]:flex-col min-[390px]:items-start">
-                    <Zap className="size-4 text-indigo-300" />
-                    <div>
-                      <p className="text-2xl font-black tracking-tight text-white">60</p>
-                      <p className="font-mono text-[8px] uppercase text-zinc-500">target fps</p>
-                    </div>
-                  </div>
-                </div>
-
-                <a href="#contact" className="group mt-4 flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.035] px-4 py-3 text-xs font-bold text-white transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8">
-                  Start building <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                {/* Bottom CTA */}
+                <a href="#contact" className="group mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-semibold text-zinc-200 transition-colors hover:bg-white/[0.08] hover:text-white">
+                  Deploy System <ArrowUpRight className="size-4 text-zinc-500 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
                 </a>
               </div>
             </div>
           </motion.div>
 
-          <FloatingBadge className="left-3 top-3 sm:-top-5 sm:left-5" icon={<Smartphone />} label="React Native" />
-          <FloatingBadge className="bottom-3 right-3 sm:-bottom-5 sm:right-5" icon={<Check />} label="Production ready" delay="1.2s" />
-          <div className="hero-depth-label pointer-events-none absolute -bottom-9 left-1/2 hidden -translate-x-1/2 items-center gap-2 whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-600 sm:flex">
-            <View className="size-3 text-indigo-300" /> move cursor to inspect depth
+          <FloatingBadge className="left-[-1rem] top-8 sm:left-[-2rem] sm:top-12" icon={<Smartphone />} label="React Native" />
+          <FloatingBadge className="right-[-1rem] bottom-16 sm:right-[-2rem] sm:bottom-20" icon={<Check />} label="Production" delay="1.2s" />
+          <div className="hero-depth-label pointer-events-none absolute -bottom-10 left-1/2 hidden -translate-x-1/2 items-center gap-2 whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-600 sm:flex">
+            <View className="size-3 text-indigo-300" /> interactive depth
           </div>
         </motion.div>
       </div>
@@ -286,5 +247,192 @@ function TypewriterText({ text }: { text: string }) {
         className="inline-block w-[6px] h-[1em] bg-emerald-400 ml-[2px] align-middle"
       />
     </span>
+  );
+}
+
+function TypewriterFormatted({ segments, startDelay = 0, onComplete, showCaret = false }: { segments: { text: string, className?: string }[], startDelay?: number, onComplete?: () => void, showCaret?: boolean }) {
+  const totalChars = segments.reduce((sum, seg) => sum + seg.text.length, 0);
+  const [chars, setChars] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    let interval: NodeJS.Timeout;
+    
+    timeout = setTimeout(() => {
+      setIsTyping(true);
+      let current = 0;
+      interval = setInterval(() => {
+        current++;
+        setChars(current);
+        if (current >= totalChars) {
+          clearInterval(interval);
+          setIsTyping(false);
+          if (onCompleteRef.current) onCompleteRef.current();
+        }
+      }, 40); // typing speed
+    }, startDelay);
+    
+    return () => { clearTimeout(timeout); clearInterval(interval); };
+  }, [totalChars, startDelay]);
+
+  let renderedChars = 0;
+  return (
+    <>
+      {segments.map((seg, i) => {
+        if (renderedChars >= chars) return null;
+        const charsToRender = Math.min(seg.text.length, chars - renderedChars);
+        renderedChars += charsToRender;
+        return <span key={i} className={seg.className}>{seg.text.slice(0, charsToRender)}</span>;
+      })}
+      {showCaret && isTyping && <span className="terminal-caret ml-1 inline-block h-3 w-1.5 bg-indigo-300 align-middle" />}
+    </>
+  );
+}
+
+function TerminalProcess({ logs }: { logs: Array<{time: string, label: string, value: string, tone: string}> }) {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (step === 5) {
+      const timer = setTimeout(() => setStep(6), 5000); // 2s wait + 3s for 3 output lines
+      return () => clearTimeout(timer);
+    }
+    if (step === 6) {
+      const timer = setTimeout(() => setStep(7), 2000); // FPS load duration
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
+
+  const advance = useCallback(() => setStep(s => s + 1), []);
+
+  return (
+    <>
+      <div className="hero-code relative mb-4 overflow-hidden rounded-2xl border border-white/5 bg-[#000]/40 p-3 shadow-inner sm:p-4">
+        <div className="absolute right-3 top-3 font-mono text-[9px] text-zinc-600">app.tsx</div>
+        <div className="space-y-2 font-mono text-[9px] sm:space-y-2.5 sm:text-[11px]">
+          <CodeLine number="01">
+            <TypewriterFormatted 
+              startDelay={600} 
+              onComplete={advance} 
+              showCaret={step === 0}
+              segments={[
+                { text: "export ", className: "text-violet-300" },
+                { text: "const ", className: "text-cyan-300" },
+                { text: "developer = ", className: "" },
+                { text: "{", className: "text-amber-200" }
+              ]} 
+            />
+          </CodeLine>
+          
+          {step >= 1 && (
+            <CodeLine number="02" indent>
+              <TypewriterFormatted 
+                startDelay={250}
+                onComplete={advance} 
+                showCaret={step === 1}
+                segments={[
+                  { text: "skills: ", className: "text-zinc-300" },
+                  { text: '["React Native", "Flutter", "TypeScript"]', className: "text-emerald-300" },
+                  { text: ",", className: "" }
+                ]} 
+              />
+            </CodeLine>
+          )}
+
+          {step >= 2 && (
+            <CodeLine number="03" indent>
+              <TypewriterFormatted 
+                startDelay={250}
+                onComplete={advance} 
+                showCaret={step === 2}
+                segments={[
+                  { text: "focus: ", className: "text-zinc-300" },
+                  { text: '"production-ready systems"', className: "text-pink-300" },
+                  { text: ",", className: "" }
+                ]} 
+              />
+            </CodeLine>
+          )}
+
+          {step >= 3 && (
+            <CodeLine number="04" indent>
+              <TypewriterFormatted 
+                startDelay={250}
+                onComplete={advance} 
+                showCaret={step === 3}
+                segments={[
+                  { text: "experience: ", className: "text-zinc-300" },
+                  { text: "3", className: "text-amber-200" },
+                  { text: " + ", className: "" },
+                  { text: "years", className: "text-amber-200" },
+                  { text: ",", className: "" }
+                ]} 
+              />
+            </CodeLine>
+          )}
+
+          {step >= 4 && (
+            <CodeLine number="05">
+              <TypewriterFormatted 
+                startDelay={250}
+                onComplete={advance} 
+                showCaret={step === 4}
+                segments={[
+                  { text: "}", className: "text-amber-200" },
+                  { text: ";", className: "" }
+                ]} 
+              />
+              {step >= 5 && <span className="terminal-caret ml-1 inline-block h-3 w-1.5 bg-indigo-300 align-middle animate-pulse" />}
+            </CodeLine>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 min-[390px]:grid-cols-[1fr_auto]">
+        <div className="rounded-2xl border border-white/5 bg-[#000]/40 p-3 shadow-inner">
+          <div className="mb-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-widest text-zinc-500">
+            <Terminal className="size-3" /> Output
+          </div>
+          <div className="space-y-2 min-h-[64px]">
+            {step >= 5 && logs.map((log, index) => (
+              <motion.div
+                key={log.label}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 2 + index * 1 }}
+                className="grid grid-cols-[auto_1fr_auto] items-center gap-2 font-mono text-[9px]"
+              >
+                <span className="text-zinc-600">{log.time}</span>
+                <span className="text-zinc-400">{log.label}</span>
+                <span className={log.tone}>{log.value}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+        <div className="flex min-h-20 flex-row items-center justify-between rounded-2xl border border-white/5 bg-[#000]/40 p-3 shadow-inner min-[390px]:w-20 min-[390px]:flex-col min-[390px]:items-start">
+          <Zap className="size-4 text-zinc-500" />
+          <div className="mt-auto">
+            {step < 7 ? (
+              <div className="flex h-8 items-center gap-[3px] pb-1">
+                <motion.span animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0 }} className="size-[5px] rounded-full bg-zinc-600" />
+                <motion.span animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.2 }} className="size-[5px] rounded-full bg-zinc-600" />
+                <motion.span animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.4 }} className="size-[5px] rounded-full bg-zinc-600" />
+              </div>
+            ) : (
+              <motion.p initial={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }} animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }} className="text-2xl font-black tracking-tight text-white">
+                60
+              </motion.p>
+            )}
+            <p className="font-mono text-[8px] uppercase text-zinc-500">target fps</p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

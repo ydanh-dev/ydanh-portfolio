@@ -20,7 +20,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="contact-zone relative overflow-hidden py-16 sm:py-32">
+    <section id="contact" className="contact-zone relative overflow-hidden pt-16 pb-4 sm:pt-32 sm:pb-6">
       <div className="profile-grid absolute inset-0 opacity-30" />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <AnimatedSection className="mb-9 max-w-3xl sm:mb-12">
@@ -60,15 +60,15 @@ export default function Contact() {
           <div className="grid gap-5">
             <AnimatedSection delay={0.06}>
               <button type="button" onClick={copyEmail} className="contact-channel group flex w-full items-center gap-4 rounded-[2rem] border border-white/10 bg-white/[0.025] p-5 text-left transition-all hover:border-indigo-400/30 hover:bg-indigo-400/5">
-                <span className="flex size-11 items-center justify-center rounded-xl bg-indigo-400/10 text-indigo-300 flex-shrink-0"><Mail className="size-5" /></span>
+                <span className="flex size-11 items-center justify-center flex-shrink-0 rounded-xl bg-indigo-400/10 text-indigo-300"><Mail className="size-5" /></span>
                 <span className="min-w-0 flex-1"><small className="block font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-600">Email</small><b className="mt-1 block truncate text-sm text-zinc-200">duynguyen1bb@gmail.com</b></span>
-                {copied ? <Check className="size-4 text-emerald-300 flex-shrink-0" /> : <Copy className="size-4 text-zinc-600 transition group-hover:text-indigo-300 flex-shrink-0" />}
+                {copied ? <Check className="size-4 flex-shrink-0 text-emerald-300" /> : <Copy className="size-4 flex-shrink-0 text-zinc-600 transition group-hover:text-indigo-300" />}
               </button>
             </AnimatedSection>
             {channels.map((channel, index) => (
               <AnimatedSection key={channel.label} delay={0.1 + index * 0.04}>
                 <a href={channel.href} target={channel.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="contact-channel group flex items-center gap-4 rounded-[2rem] border border-white/10 bg-white/[0.025] p-5 transition-all hover:border-indigo-400/30 hover:bg-indigo-400/5">
-                  <span className="flex size-11 items-center justify-center rounded-xl border border-white/8 bg-black/25 text-zinc-400 transition group-hover:text-indigo-300 flex-shrink-0">
+                  <span className="flex size-11 items-center justify-center flex-shrink-0 rounded-xl border border-white/8 bg-black/25 text-zinc-400 transition group-hover:text-indigo-300">
                     {channel.isSVG ? (
                       channel.label === "LinkedIn" ? (
                         <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.946v5.441h-3.554s.05-8.736 0-9.646h3.554v1.364c.429-.659 1.191-1.599 2.896-1.599 2.117 0 3.704 1.385 3.704 4.362v5.519zM5.337 9.432c-1.144 0-1.915-.758-1.915-1.704 0-.951.768-1.703 1.959-1.703 1.188 0 1.914.752 1.939 1.703 0 .946-.751 1.704-1.983 1.704zm1.586 11.02H3.73V9.806h3.193v10.646zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
@@ -80,16 +80,16 @@ export default function Contact() {
                     )}
                   </span>
                   <span className="min-w-0 flex-1"><small className="block font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-600">{channel.label}</small><b className="mt-1 block truncate text-sm text-zinc-300">{channel.value}</b></span>
-                  <ExternalLink className="size-4 text-zinc-700 transition group-hover:translate-x-1 group-hover:text-indigo-300 flex-shrink-0" />
+                  <ExternalLink className="size-4 flex-shrink-0 text-zinc-700 transition group-hover:translate-x-1 group-hover:text-indigo-300" />
                 </a>
               </AnimatedSection>
             ))}
           </div>
         </div>
 
-        <AnimatedSection delay={0.2} className="mt-24 border-t border-white/8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-400 font-medium">
+        <AnimatedSection delay={0.2} className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-4 text-sm font-medium text-zinc-400 sm:mt-12 sm:flex-row">
           <span>© {new Date().getFullYear()} Nguyen Anh Duy. All rights reserved.</span>
-          <span className="flex items-center gap-2 transition-colors hover:text-indigo-300 cursor-default">
+          <span className="flex cursor-default items-center gap-2 transition-colors hover:text-indigo-300">
             <MapPin className="size-4 text-indigo-400" /> Binh Duong City, Vietnam
           </span>
         </AnimatedSection>
