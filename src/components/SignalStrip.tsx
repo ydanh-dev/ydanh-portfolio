@@ -1,23 +1,14 @@
-const signals = [
-  "React Native",
-  "Flutter",
-  "Mobile Architecture",
-  "Design Systems",
-  "API Integration",
-  "Performance",
-  "Product Thinking",
-];
+import { Braces, CheckCircle2, GitBranch, Radio } from "lucide-react";
 
 export default function SignalStrip() {
   return (
-    <div className="signal-strip relative overflow-hidden border-y border-white/6 bg-[#08080e] py-3">
-      <div className="signal-marquee flex w-max items-center">
-        {[...signals, ...signals].map((signal, index) => (
-          <div key={`${signal}-${index}`} className="flex items-center gap-5 px-5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
-            <span className="size-1 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,.9)]" />
-            {signal}
-          </div>
-        ))}
+    <div className="border-y border-white/10 bg-[#0b1015]">
+      <div className="mx-auto flex max-w-7xl items-center gap-5 overflow-x-auto px-4 py-2 font-mono text-[9px] text-zinc-500 sm:px-6">
+        <span className="flex shrink-0 items-center gap-2 text-emerald-400"><Radio className="size-3" /> workspace.ready</span>
+        <span className="flex shrink-0 items-center gap-2"><GitBranch className="size-3" /> master</span>
+        <span className="flex shrink-0 items-center gap-2"><Braces className="size-3" /> TypeScript strict</span>
+        <span className="flex shrink-0 items-center gap-2"><CheckCircle2 className="size-3" /> build passing</span>
+        <span className="ml-auto shrink-0 text-amber-300">portfolio@production</span>
       </div>
     </div>
   );
