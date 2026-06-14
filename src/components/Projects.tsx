@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Check, X, GitBranch } from "lucide-react";
+import { ArrowUpRight, Check, X } from "lucide-react";
 import { projectsData, type Project } from "@/data/projects";
 import AnimatedSection from "./AnimatedSection";
 
@@ -25,7 +25,7 @@ export default function Projects() {
               Production projects & <span className="text-gradient">case studies.</span>
             </h2>
           </div>
-          <p className="text-sm leading-7 text-zinc-500">Detailed technical breakdowns of systems I've architected and shipped to production.</p>
+          <p className="text-sm leading-7 text-zinc-500">Detailed technical breakdowns of systems I&apos;ve architected and shipped to production.</p>
         </AnimatedSection>
 
         <div className="space-y-6">

@@ -1,122 +1,133 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Terminal, Smartphone, Database, Layout, Command, Code2, Network, Cpu } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
-import Image from "next/image";
 
-const skillCategories = [
+const skillMatrix = [
   {
-    title: "Mobile Development",
-    skills: [
-      { name: "React Native", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "Flutter", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
-      { name: "Dart", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
-    ],
+    category: "Mobile Architecture",
+    description: "Building cross-platform mobile apps with native-like performance and complex state management.",
+    icon: Smartphone,
+    color: "text-indigo-400",
+    bg: "bg-indigo-400/10",
+    border: "border-indigo-400/20",
+    items: ["React Native", "Flutter", "Dart", "Swift/iOS", "Kotlin/Android"],
   },
   {
-    title: "Frontend",
-    skills: [
-      { name: "TypeScript", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-      { name: "React", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "Next.js", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-    ],
+    category: "Frontend Systems",
+    description: "Developing responsive, accessible, and performant web interfaces with modern React ecosystems.",
+    icon: Layout,
+    color: "text-emerald-400",
+    bg: "bg-emerald-400/10",
+    border: "border-emerald-400/20",
+    items: ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
   },
   {
-    title: "State & Data",
-    skills: [
-      { name: "Zustand", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "React Query", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "REST APIs", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/devicon/devicon-original.svg" },
-    ],
+    category: "Data & State Flow",
+    description: "Designing predictable state management and robust API integration layers.",
+    icon: Database,
+    color: "text-amber-400",
+    bg: "bg-amber-400/10",
+    border: "border-amber-400/20",
+    items: ["Zustand", "React Query", "Redux Toolkit", "GraphQL", "REST APIs"],
   },
   {
-    title: "DevOps & Tools",
-    skills: [
-      { name: "Git/GitHub", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-      { name: "VS Code", level: "Expert", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-      { name: "Android Studio", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" },
-    ],
+    category: "Engineering Ops",
+    description: "Maintaining code quality, version control, and smooth deployment pipelines.",
+    icon: Terminal,
+    color: "text-rose-400",
+    bg: "bg-rose-400/10",
+    border: "border-rose-400/20",
+    items: ["Git / GitHub", "CI/CD Actions", "Jest", "App Store Connect", "Play Console"],
   },
 ];
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative py-24 sm:py-32 bg-muted/5 border-y border-border overflow-hidden">
-      {/* Background glowing effects */}
-      <div className="absolute top-0 left-0 w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-indigo-500/10 rounded-full blur-[100px] opacity-40 pointer-events-none" />
+    <section id="skills" className="relative py-24 sm:py-32 bg-[#050505] overflow-hidden border-t border-white/5">
+      {/* Background Grid */}
+      <div 
+        className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #3f3f46 1px, transparent 1px),
+            linear-gradient(to bottom, #3f3f46 1px, transparent 1px)
+          `,
+          backgroundSize: '24px 24px'
+        }}
+      />
 
-      <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
-        <AnimatedSection className="mb-16 max-w-2xl">
-          <p className="section-kicker mb-4">tech-stack</p>
-          <h2 className="font-heading text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Technologies & <span className="text-gradient">Tools</span>
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+        <AnimatedSection className="mb-16">
+          <div className="flex items-center gap-3 mb-4 text-zinc-500 font-mono text-sm">
+            <Command className="size-4" />
+            <span>{`// src/core-competencies`}</span>
+          </div>
+          <h2 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
+            Technical Stack & <br className="hidden sm:block" />
+            <span className="text-zinc-500">Engineering Matrix.</span>
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            The technologies I use to build high-performance mobile and web applications. Focused on modern tooling and production-ready systems.
-          </p>
         </AnimatedSection>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {skillCategories.map((category, index) => (
-            <AnimatedSection key={category.title} delay={index * 0.1}>
-              <div className="glass h-full rounded-2xl p-6 border border-border/50 hover:border-primary/50 transition-colors shadow-sm hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.1)]">
-                <h3 className="font-heading text-sm font-semibold text-foreground mb-6 uppercase tracking-wider text-zinc-400">
-                  {category.title}
-                </h3>
-                <div className="space-y-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={`${skill.name}-${skillIndex}`}
-                      whileHover={{ x: 4 }}
-                      className="group flex items-center gap-3 rounded-lg p-3 transition-all hover:bg-white/5 cursor-default"
-                    >
-                      <div className="relative size-6 flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src={skill.icon}
-                          alt={skill.name}
-                          fill
-                          className="object-contain filter brightness-0 invert"
-                          unoptimized
-                        />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-zinc-200">
-                          {skill.name}
-                        </p>
-                        <p className="text-[10px] text-zinc-500 font-mono">
-                          {skill.level}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
+        <div className="grid gap-6 md:grid-cols-2">
+          {skillMatrix.map((matrix, index) => {
+            const Icon = matrix.icon;
+            return (
+              <AnimatedSection key={matrix.category} delay={index * 0.1}>
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-zinc-800 bg-[#0a0a0f] p-6 sm:p-8 transition-colors hover:border-zinc-700">
+                  <div className={`mb-6 inline-flex size-12 items-center justify-center rounded-2xl border ${matrix.border} ${matrix.bg}`}>
+                    <Icon className={`size-6 ${matrix.color}`} />
+                  </div>
+                  
+                  <h3 className="mb-2 text-xl font-bold text-white">{matrix.category}</h3>
+                  <p className="mb-8 text-sm leading-relaxed text-zinc-400">
+                    {matrix.description}
+                  </p>
+
+                  <div className="mt-auto">
+                    <div className="flex items-center gap-2 mb-4 text-[10px] font-mono uppercase tracking-wider text-zinc-500">
+                      <Network className="size-3" /> Stack Instances
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {matrix.items.map((item) => (
+                        <span 
+                          key={item} 
+                          className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 py-1.5 font-mono text-[11px] text-zinc-300 transition-colors group-hover:border-zinc-700 group-hover:bg-zinc-800"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </AnimatedSection>
-          ))}
+              </AnimatedSection>
+            );
+          })}
         </div>
 
-        {/* Additional Skills Grid */}
-        <AnimatedSection delay={0.4} className="mt-16">
-          <div className="rounded-2xl border border-border/50 bg-white/[0.025] p-8">
-            <p className="section-kicker mb-6">expertise-areas</p>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* System Fundamentals */}
+        <AnimatedSection delay={0.4} className="mt-6">
+          <div className="rounded-[2rem] border border-zinc-800 bg-[#0a0a0f] p-6 sm:p-8">
+            <div className="flex items-center gap-2 mb-6 text-[10px] font-mono uppercase tracking-wider text-zinc-500">
+              <Cpu className="size-3" /> System Fundamentals
+            </div>
+            <div className="flex flex-wrap gap-3">
               {[
-                "Mobile-first architecture",
-                "State management patterns",
-                "API integration & REST design",
-                "Performance optimization",
-                "Cross-platform development",
+                "Mobile-First Architecture",
+                "State Management Patterns",
+                "API Integration & REST Design",
+                "Performance Optimization",
+                "Cross-Platform Compilation",
                 "Responsive UI/UX",
-                "Testing & QA",
-                "Agile/Scrum methodologies",
-                "Production deployment",
+                "Agile / Scrum Methodologies",
+                "Production Deployment"
               ].map((skill) => (
                 <div
                   key={skill}
-                  className="flex items-center gap-3 rounded-lg border border-white/8 bg-white/[0.02] px-4 py-3 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/5"
+                  className="flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs font-medium text-zinc-300 transition-colors hover:border-zinc-700"
                 >
-                  <div className="size-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                  <span className="text-sm text-zinc-300">{skill}</span>
+                  <Code2 className="size-3 text-emerald-400" />
+                  {skill}
                 </div>
               ))}
             </div>

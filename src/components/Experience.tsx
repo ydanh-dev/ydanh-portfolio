@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Briefcase } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import { ArrowRight, Briefcase } from "lucide-react";
 
 const releases = [
   {

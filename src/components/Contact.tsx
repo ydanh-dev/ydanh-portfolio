@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { ArrowUpRight, Check, Copy, Mail, MapPin, Phone, ExternalLink } from "lucide-react";
-import { motion } from "framer-motion";
 import AnimatedSection from "./AnimatedSection";
 
 const channels = [
   { label: "Phone", value: "(+84) 937 376 797", href: "tel:+84937376797", icon: Phone },
-  { label: "LinkedIn", value: "connect", href: "https://linkedin.com", isSVG: true },
+  { label: "LinkedIn", value: "connect", href: "https://linkedin.com/in/ydanh-dev", isSVG: true },
   { label: "GitHub", value: "ydanh-dev", href: "https://github.com/ydanh-dev", isSVG: true },
 ];
 
@@ -27,10 +26,10 @@ export default function Contact() {
         <AnimatedSection className="mb-9 max-w-3xl sm:mb-12">
           <p className="section-kicker">get-in-touch</p>
           <h2 className="mt-4 text-3xl font-black tracking-[-0.055em] text-white min-[430px]:text-4xl sm:text-6xl">
-            Let's build something <span className="text-gradient text-gradient-live">great together.</span>
+            Let&apos;s build something <span className="text-gradient text-gradient-live">great together.</span>
           </h2>
           <p className="mt-6 max-w-xl text-sm leading-7 text-zinc-400">
-            I'm open to mobile and frontend opportunities where thoughtful product work and dependable engineering matter. Let's connect and discuss how I can contribute to your team.
+            I&apos;m open to mobile and frontend opportunities where thoughtful product work and dependable engineering matter. Let&apos;s connect and discuss how I can contribute to your team.
           </p>
         </AnimatedSection>
 
