@@ -6,7 +6,7 @@ import AnimatedSection from "./AnimatedSection";
 
 const channels = [
   { label: "Phone", value: "(+84) 937 376 797", href: "tel:+84937376797", icon: Phone },
-  { label: "LinkedIn", value: "connect", href: "https://linkedin.com/in/ydanh-dev", isSVG: true },
+  { label: "LinkedIn", value: "connect", href: "https://www.linkedin.com/in/duyna22/", isSVG: true },
   { label: "GitHub", value: "ydanh-dev", href: "https://github.com/ydanh-dev", isSVG: true },
 ];
 
