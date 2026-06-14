@@ -329,22 +329,29 @@ export default function PortfolioExperience() {
           <div className={styles.approachRail}>
             <span>{"// select a stage"}</span>
             {approachSteps.map((step, index) => (
-              <button key={step.number} type="button" onClick={() => setActiveApproach(index)} className={activeApproach === index ? styles.activeApproach : ""}>
-                <b>{step.number}</b>
-                <span>{step.label}</span>
-                <small>{step.code}</small>
-                <i />
-              </button>
+              <motion.button
+                key={step.number}
+                type="button"
+                onClick={() => setActiveApproach(index)}
+                className={activeApproach === index ? styles.activeApproach : ""}
+                whileHover={{ backgroundColor: "rgba(240, 238, 231, 0.06)" }}
+                transition={{ duration: .3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {activeApproach === index && <motion.i layoutId="approach-active-rail" transition={{ type: "spring", stiffness: 170, damping: 24, mass: .75 }} />}
+                <motion.b animate={{ opacity: activeApproach === index ? 1 : .65, x: activeApproach === index ? 3 : 0 }} transition={{ duration: .35 }}>{step.number}</motion.b>
+                <motion.span animate={{ x: activeApproach === index ? 5 : 0 }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}>{step.label}</motion.span>
+                <motion.small animate={{ opacity: activeApproach === index ? 1 : .65 }} transition={{ duration: .35 }}>{step.code}</motion.small>
+              </motion.button>
             ))}
           </div>
           <AnimatePresence mode="wait">
             <motion.article
               key={activeApproach}
               className={styles.approachDetail}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: .3, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 8, filter: "blur(3px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -5, filter: "blur(2px)" }}
+              transition={{ duration: .46, ease: [0.22, 1, 0.36, 1] }}
             >
               <div><span>{"// working-method."}{approachSteps[activeApproach].number}</span><b>{approachSteps[activeApproach].code}</b></div>
               <h3>{approachSteps[activeApproach].title}</h3>
