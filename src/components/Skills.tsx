@@ -1,6 +1,6 @@
 "use client";
 
-import { Terminal, Smartphone, Database, Layout, Command, Code2, Network, Cpu } from "lucide-react";
+import { Code2, Command, Cpu, Database, Layout, Network, Smartphone, Terminal } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 const skillMatrix = [
@@ -46,7 +46,7 @@ export default function Skills() {
   return (
     <section id="skills" className="relative py-24 sm:py-32 bg-[#050505] overflow-hidden border-t border-white/5">
       {/* Background Grid */}
-      <div 
+      <div
         className="absolute inset-0 z-0 opacity-10 pointer-events-none"
         style={{
           backgroundImage: `
@@ -78,7 +78,7 @@ export default function Skills() {
                   <div className={`mb-6 inline-flex size-12 items-center justify-center rounded-2xl border ${matrix.border} ${matrix.bg}`}>
                     <Icon className={`size-6 ${matrix.color}`} />
                   </div>
-                  
+
                   <h3 className="mb-2 text-xl font-bold text-white">{matrix.category}</h3>
                   <p className="mb-8 text-sm leading-relaxed text-zinc-400">
                     {matrix.description}
@@ -90,8 +90,8 @@ export default function Skills() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {matrix.items.map((item) => (
-                        <span 
-                          key={item} 
+                        <span
+                          key={item}
                           className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 py-1.5 font-mono text-[11px] text-zinc-300 transition-colors group-hover:border-zinc-700 group-hover:bg-zinc-800"
                         >
                           {item}

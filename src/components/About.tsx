@@ -1,5 +1,5 @@
+import { ArrowRight, Code2, Target, Zap } from "lucide-react";
 import Image from "next/image";
-import { ArrowRight, Code2, Zap, Target } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 const disciplines = [

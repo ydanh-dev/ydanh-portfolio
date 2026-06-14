@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { projectsData, type Project } from "@/data/projects";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Check, X } from "lucide-react";
-import { projectsData, type Project } from "@/data/projects";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import AnimatedSection from "./AnimatedSection";
 
 export default function Projects() {
@@ -75,7 +75,7 @@ export default function Projects() {
               <p className="section-kicker">project-details / {selectedProject.year}</p>
               <h3 className="mt-4 pr-12 text-3xl font-black tracking-tight text-white">{selectedProject.title}</h3>
               <p className="mt-6 text-sm leading-7 text-zinc-400">{selectedProject.longDescription}</p>
-              
+
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/8 bg-white/[0.025] p-5">
                   <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-600">My Role</p>

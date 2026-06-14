@@ -1,7 +1,7 @@
 "use client";
 
-import AnimatedSection from "./AnimatedSection";
 import { ArrowRight, Briefcase } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
 
 const releases = [
   {
@@ -64,7 +64,7 @@ export default function Experience() {
             <AnimatedSection key={release.version} delay={index * 0.05}>
               <div className="release-card group relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0a0a13] p-6 sm:p-8 transition-all hover:border-white/20">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                
+
                 <div className="relative flex flex-col gap-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
@@ -74,7 +74,7 @@ export default function Experience() {
                       </div>
                       <span className="font-mono text-[9px] text-zinc-600">{release.period}</span>
                     </div>
-                    
+
                     <div className="mb-4">
                       <div className="flex items-center gap-2 mb-2">
                         <Briefcase className="size-4 text-indigo-300" />

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowDownRight,
@@ -14,6 +13,7 @@ import {
   Mail,
   Terminal,
 } from "lucide-react";
+import { useState } from "react";
 
 type TabId = "readme" | "projects" | "activity";
 
