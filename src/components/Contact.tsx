@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { BriefcaseBusiness, Check, Code2, Copy, Mail, MapPin, Phone, Send } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, Check, Code2, Copy, Mail, MapPin, Phone } from "lucide-react";
+import { motion } from "framer-motion";
 import AnimatedSection from "./AnimatedSection";
 
 const channels = [
-  { label: "github", value: "ydanh-dev", href: "https://github.com/ydanh-dev", icon: Code2 },
-  { label: "linkedin", value: "connect", href: "https://linkedin.com", icon: BriefcaseBusiness },
-  { label: "call / zalo", value: "(+84) 937 376 797", href: "tel:+84937376797", icon: Phone },
+  { label: "Phone", value: "(+84) 937 376 797", href: "tel:+84937376797", icon: Phone },
+  { label: "LinkedIn", value: "connect", href: "https://linkedin.com", icon: BriefcaseBusiness },
+  { label: "GitHub", value: "ydanh-dev", href: "https://github.com/ydanh-dev", icon: Code2 },
 ];
 
 export default function Contact() {
@@ -49,7 +50,7 @@ export default function Contact() {
               </div>
               <div className="border-t border-white/8 p-5 sm:p-7">
                 <a href="mailto:duynguyen1bb@gmail.com" className="magnetic-button inline-flex items-center gap-3 rounded-xl bg-white px-5 py-3 text-xs font-black text-zinc-950">
-                  Send an email <Send className="size-4" />
+                  Send an email <ArrowUpRight className="size-4" />
                 </a>
               </div>
             </div>
@@ -75,10 +76,12 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/8 pt-7 font-mono text-[9px] uppercase tracking-[0.16em] text-zinc-700 sm:flex-row sm:items-center sm:justify-between">
+        <AnimatedSection delay={0.2} className="mt-24 border-t border-white/8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-400 font-medium">
           <span>© {new Date().getFullYear()} Nguyen Anh Duy</span>
-          <span className="flex items-center gap-2"><MapPin className="size-3" /> Built in Vietnam · deployed worldwide</span>
-        </div>
+          <span className="flex items-center gap-2 transition-colors hover:text-indigo-300 cursor-default">
+            <MapPin className="size-4 text-indigo-400" /> Binh Duong City, Vietnam
+          </span>
+        </AnimatedSection>
       </div>
     </section>
   );

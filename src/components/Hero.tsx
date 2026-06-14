@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   ArrowDownRight,
+  Download,
   ArrowUpRight,
   Check,
   Code2,
@@ -57,11 +58,11 @@ export default function Hero() {
           </div>
 
           <p className="hero-enter hero-delay-1 mb-3 flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-indigo-300 sm:mb-4 sm:text-xs sm:tracking-[0.24em]">
-            <Code2 className="size-3.5" /> Mobile and front-end developer
+            <Code2 className="size-3.5" /> <TypewriterText text="NGUYEN ANH DUY - Mobile & Front-end Developer" />
           </p>
           <h1 className="hero-enter hero-delay-2 max-w-full text-[2.55rem] font-black leading-[0.98] tracking-[-0.06em] text-white min-[430px]:text-5xl sm:text-7xl lg:text-[5.35rem]">
-            I engineer apps with
-            <span className="text-gradient text-gradient-live"> real momentum.</span>
+            Crafting Seamless
+            <span className="text-gradient text-gradient-live block"> Mobile & Web Experiences.</span>
           </h1>
           <p className="hero-enter hero-delay-3 mt-5 max-w-2xl text-sm leading-6 text-zinc-400 sm:mt-7 sm:text-lg sm:leading-7">
             Nguyen Anh Duy builds production mobile products, expressive interfaces,
@@ -76,12 +77,12 @@ export default function Hero() {
           </div>
 
           <div className="hero-enter hero-delay-4 mt-7 grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-2 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3">
-            <a href="#projects" className="magnetic-button group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl bg-white px-2 py-3 text-center text-[11px] font-bold text-zinc-950 sm:px-5 sm:text-sm">
-              <span className="font-mono">▶ run projects</span>
+            <a href="#contact" className="magnetic-button group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl bg-white px-2 py-3 text-center text-[11px] font-bold text-zinc-950 sm:px-5 sm:text-sm">
+              <span className="font-mono">Contact Me</span>
               <ArrowDownRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
             </a>
-            <a href="https://github.com/ydanh-dev" target="_blank" rel="noreferrer" className="group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-[11px] font-semibold text-zinc-200 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8 sm:px-5 sm:text-sm">
-              <GitBranch className="size-4 transition-transform group-hover:-rotate-12" /> <span className="font-mono">[ GitHub ]</span>
+            <a href="/cv.pdf" target="_blank" rel="noreferrer" className="group inline-flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-[11px] font-semibold text-zinc-200 transition-colors hover:border-indigo-400/30 hover:bg-indigo-400/8 sm:px-5 sm:text-sm">
+              <Download className="size-4 transition-transform group-hover:-translate-y-0.5" /> <span className="font-mono">Download CV</span>
             </a>
           </div>
 
@@ -222,5 +223,33 @@ function FloatingBadge({ className, icon, label, delay = "0s" }: { className: st
       <span className="text-indigo-300 [&_svg]:size-3.5">{icon}</span>
       {label}
     </div>
+  );
+}
+
+function TypewriterText({ text }: { text: string }) {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i <= text.length) {
+        setDisplayedText(text.slice(0, i));
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return (
+    <span>
+      {displayedText}
+      <motion.span
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+        className="inline-block w-[6px] h-[1em] bg-emerald-400 ml-1 align-middle"
+      />
+    </span>
   );
 }
