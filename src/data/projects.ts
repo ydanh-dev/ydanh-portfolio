@@ -5,10 +5,8 @@ export interface Project {
   longDescription: string;
   tags: string[];
   year: string;
-  category: "mobile" | "frontend";
-  liveUrl?: string;
-  sourceUrl?: string;
-  visualType?: "shop" | "bloc" | "mendix" | "qa" | "generic";
+  category: "platform" | "mobile";
+  surfaces: string[];
   imageUrl?: string;
   role: string;
   scope: string;
@@ -19,58 +17,62 @@ export interface Project {
 export const projectsData: Project[] = [
   {
     id: 1,
-    title: "GreenLeaf Vietnam (GLV)",
-    description: "Corporate ride booking and fleet tracking mobile application built with React Native.",
-    longDescription: "Developed a high-performance React Native mobile application for GreenLeaf Vietnam (GLV) to streamline corporate transportation services. Built real-time ride tracking utilizing maps integration, automated fleet driver scheduling, and responsive user flows. Engineered state synchronization and HTTP middleware utilizing Zustand, Axios, and React Query to optimize coordinate caching for seamless offline usability during transit.",
-    tags: ["React Native", "Zustand", "React Query", "Axios", "Maps API"],
-    year: "2023",
-    category: "mobile",
+    title: "GreenLeaf Vietnam",
+    description: "A multi-surface transport operations platform for customers, drivers, and internal teams.",
+    longDescription: "Contributed across GreenLeaf's transport operations ecosystem: Angular admin and customer portals, React Native passenger and driver applications, and the NestJS API behind them. The system coordinates short- and long-term contracts, schedules, driver and vehicle operations, live tracking, customer issues, maintenance, finance, and reporting across role-specific workflows.",
+    tags: ["React Native", "Angular", "NestJS", "TypeScript", "MapLibre", "Socket.IO"],
+    year: "Production",
+    category: "platform",
+    surfaces: ["Admin web", "Customer web", "Passenger app", "Driver app", "API"],
     imageUrl: "/glv.jpg",
-    role: "Mobile engineer",
-    scope: "Ride booking · live tracking · fleet operations",
-    outcome: "Connected complex transport workflows into one dependable mobile experience.",
-    highlights: ["Real-time map workflows", "Offline-aware state", "Driver scheduling"]
+    role: "Product engineer · Web, mobile & API",
+    scope: "Contracts · scheduling · fleet · tracking · maintenance",
+    outcome: "Connected customer-facing journeys and internal fleet operations into one production platform.",
+    highlights: ["Role-specific web and mobile products", "Live tracking and schedule workflows", "Cross-surface API contracts"],
   },
   {
     id: 2,
-    title: "Kim Tin Group (KTG) Mobile Portal",
-    description: "Enterprise resource and logistics mobile app built with React Native for factory operators.",
-    longDescription: "Engineered an enterprise-grade mobile application using React Native for Kim Tin Group's factory and logistics personnel. Developed high-efficiency barcode scanning integrations, live warehouse inventory lookup sheets, and real-time transit dispatch updates. Connected device clients to central SAP ERP systems via Axios and React Query, with local states managed seamlessly by Zustand on the factory floor.",
-    tags: ["React Native", "Zustand", "React Query", "Axios", "SAP Integration"],
-    year: "2023",
+    title: "Kim Tin Group — KTG PMS",
+    description: "A mobile procurement management workspace for enterprise approval and supplier workflows.",
+    longDescription: "Built the React Native mobile surface of KTG's procurement management system. The application brings purchase requests, purchase orders, bids, bid rates, contracts, reservations, and supplier evaluation into mobile approval flows, supported by OAuth2 SSO, Firebase notifications, React Query, and production EAS releases.",
+    tags: ["React Native", "Expo", "React Query", "OAuth2 SSO", "Firebase", "EAS"],
+    year: "2026",
     category: "mobile",
+    surfaces: ["Mobile app", "NestJS integration", "SSO", "Push notifications"],
     imageUrl: "/ktg.jpg",
-    role: "React Native engineer",
-    scope: "Warehouse · barcode · SAP-connected logistics",
-    outcome: "Made factory-floor information easier to access and act on from mobile.",
-    highlights: ["Barcode integration", "Inventory lookup", "Dispatch updates"]
+    role: "Mobile product engineer",
+    scope: "PR · PO · bidding · suppliers · contracts · approvals",
+    outcome: "Moved procurement review and approval work from desktop-bound processes into a focused mobile experience.",
+    highlights: ["Procurement approval workflows", "Supplier and bidding modules", "SSO, push, and OTA delivery"],
   },
   {
     id: 3,
-    title: "Nhà Trọ Sạch Sẽ (NTSS)",
-    description: "Serviced rental room search and utility billing mobile app developed with React Native.",
-    longDescription: "Built and shipped the flagship mobile application for Nhà Trọ Sạch Sẽ (NTSS) to digitize rental property discovery and room bookings in Ho Chi Minh City. Programmed custom room search filters, automated utility bill processing interfaces, and integrated local payment gateways. Leveraged React Query and Axios for robust caching of listing APIs and Zustand for lightweight client state persistence, delivering fluid animations on older devices.",
-    tags: ["React Native", "Zustand", "React Query", "Axios", "Payment Gateway"],
-    year: "2023",
-    category: "mobile",
-    imageUrl: "/ntss.png",
-    role: "Mobile product engineer",
-    scope: "Rental discovery · bookings · utility billing",
-    outcome: "Turned property and resident operations into clear mobile workflows.",
-    highlights: ["Room search filters", "Billing workflows", "Payment integration"]
+    title: "Nhà Trọ Sạch Sẽ — NTSS v2",
+    description: "A full property operations platform spanning residents, employees, managers, finance, and maintenance.",
+    longDescription: "Contributed across the NTSS v2 platform: a React admin web application, separate customer and employee mobile apps, a large NestJS domain API, and a scheduling service. The system supports contracts, residents, bills, payments, property assets, warehouse flows, maintenance, fire safety, finance, employee operations, reporting, and role-based approvals.",
+    tags: ["React", "React Native", "NestJS", "TypeScript", "React Query", "PostgreSQL"],
+    year: "2026",
+    category: "platform",
+    surfaces: ["Admin web", "Customer app", "Employee app", "API", "Schedule service"],
+    imageUrl: "/ntss.jpeg",
+    role: "Product engineer · Web, mobile & API",
+    scope: "Property · contracts · finance · assets · maintenance",
+    outcome: "Unified resident-facing services and dense internal operations across a role-based product ecosystem.",
+    highlights: ["Admin and role-specific mobile products", "Large operational domain model", "Finance, asset, and maintenance workflows"],
   },
   {
     id: 4,
-    title: "Shop App (Flutter)",
-    description: "E-commerce mobile app for digital assets and apparel featuring secure payment integrations.",
-    longDescription: "Developed a polished e-commerce shopping client with Flutter featuring fluid product listings, an interactive shopping cart, and secure user authentication. Integrated RESTful backend APIs for dynamic inventory synchronizations and optimized application responsiveness for cross-platform iOS and Android devices.",
-    tags: ["Flutter", "Dart", "REST API", "State Management", "UI/UX"],
-    year: "2022",
+    title: "Bulsan Operations",
+    description: "A field operations mobile application for warehouse, delivery, and bill-handling workflows.",
+    longDescription: "Developed and maintained a React Native operations application used across warehouse and delivery workflows. The product supports bill creation and checking, product pickup, inventory, outbound processing, delivery, barcode and camera scanning, maps, and background geolocation, with MobX coordinating state across operational modules.",
+    tags: ["React Native", "TypeScript", "MobX", "Barcode", "Maps", "Background Geolocation"],
+    year: "Production",
     category: "mobile",
-    visualType: "shop",
-    role: "Flutter developer",
-    scope: "Commerce · cart · authentication",
-    outcome: "Built a polished cross-platform foundation for a commerce experience.",
-    highlights: ["Product discovery", "Cart state", "Responsive UI"]
-  }
+    surfaces: ["Mobile app", "Camera & barcode", "Maps", "Background services"],
+    imageUrl: "/bulsan.jpg",
+    role: "React Native engineer",
+    scope: "Bills · inventory · outbound · delivery · field operations",
+    outcome: "Put warehouse and delivery tasks into one operational mobile tool for field teams.",
+    highlights: ["Barcode and camera workflows", "Inventory and delivery modules", "Background location operations"],
+  },
 ];
