@@ -10,6 +10,10 @@ export interface Project {
   sourceUrl?: string;
   visualType?: "shop" | "bloc" | "mendix" | "qa" | "generic";
   imageUrl?: string;
+  role: string;
+  scope: string;
+  outcome: string;
+  highlights: string[];
 }
 
 export const projectsData: Project[] = [
@@ -21,7 +25,11 @@ export const projectsData: Project[] = [
     tags: ["React Native", "Zustand", "React Query", "Axios", "Maps API"],
     year: "2023",
     category: "mobile",
-    imageUrl: "/glv.jpg"
+    imageUrl: "/glv.jpg",
+    role: "Mobile engineer",
+    scope: "Ride booking · live tracking · fleet operations",
+    outcome: "Connected complex transport workflows into one dependable mobile experience.",
+    highlights: ["Real-time map workflows", "Offline-aware state", "Driver scheduling"]
   },
   {
     id: 2,
@@ -31,7 +39,11 @@ export const projectsData: Project[] = [
     tags: ["React Native", "Zustand", "React Query", "Axios", "SAP Integration"],
     year: "2023",
     category: "mobile",
-    imageUrl: "/ktg.jpg"
+    imageUrl: "/ktg.jpg",
+    role: "React Native engineer",
+    scope: "Warehouse · barcode · SAP-connected logistics",
+    outcome: "Made factory-floor information easier to access and act on from mobile.",
+    highlights: ["Barcode integration", "Inventory lookup", "Dispatch updates"]
   },
   {
     id: 3,
@@ -41,7 +53,11 @@ export const projectsData: Project[] = [
     tags: ["React Native", "Zustand", "React Query", "Axios", "Payment Gateway"],
     year: "2023",
     category: "mobile",
-    imageUrl: "/ntss.png"
+    imageUrl: "/ntss.png",
+    role: "Mobile product engineer",
+    scope: "Rental discovery · bookings · utility billing",
+    outcome: "Turned property and resident operations into clear mobile workflows.",
+    highlights: ["Room search filters", "Billing workflows", "Payment integration"]
   },
   {
     id: 4,
@@ -51,6 +67,10 @@ export const projectsData: Project[] = [
     tags: ["Flutter", "Dart", "REST API", "State Management", "UI/UX"],
     year: "2022",
     category: "mobile",
-    visualType: "shop"
+    visualType: "shop",
+    role: "Flutter developer",
+    scope: "Commerce · cart · authentication",
+    outcome: "Built a polished cross-platform foundation for a commerce experience.",
+    highlights: ["Product discovery", "Cart state", "Responsive UI"]
   }
 ];

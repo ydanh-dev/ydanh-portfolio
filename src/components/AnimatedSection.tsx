@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
-import { motion, useInView } from "framer-motion";
+import { type ReactNode } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { SPRING_SLOW } from "@/lib/spring";
 
 interface AnimatedSectionProps {
   children: ReactNode;
@@ -18,24 +17,21 @@ export default function AnimatedSection({
   delay = 0,
   direction = "up",
 }: AnimatedSectionProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   const directions = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { y: 0, x: 40 },
-    right: { y: 0, x: -40 },
+    up: { y: 20, x: 0 },
+    down: { y: -20, x: 0 },
+    left: { y: 0, x: 20 },
+    right: { y: 0, x: -20 },
     none: { y: 0, x: 0 },
   };
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.95, ...directions[direction] }}
-      animate={isInView ? { opacity: 1, scale: 1, y: 0, x: 0 } : {}}
-      transition={{ ...SPRING_SLOW, delay }}
-      className={cn("", className)}
+      initial={{ opacity: 0, ...directions[direction] }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={cn(className)}
     >
       {children}
     </motion.div>

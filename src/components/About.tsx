@@ -1,259 +1,122 @@
-"use client";
-
-import { useRef, useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
+import Image from "next/image";
+import { ArrowRight, Braces, Layers3, Rocket, ShieldCheck } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
-import { Sparkles, GraduationCap, Code2, Award, Zap } from "lucide-react";
 
-const skills = [
-  {
-    category: "Mobile",
-    items: ["Flutter / Dart", "React Native", "iOS & Android", "Provider", "BLoC"],
-    icon: <Zap className="w-4 h-4 text-cyan-400 animate-pulse" />,
-  },
-  {
-    category: "Frontend",
-    items: ["JavaScript", "HTML / CSS", "Mendix Low-code", "React.js", "Responsive UI"],
-    icon: <Code2 className="w-4 h-4 text-indigo-400" />,
-  },
-  {
-    category: "Backend & Tools",
-    items: ["RESTful APIs", "Git / GitHub", "Postman", "VS Code", "Android Studio"],
-    icon: <Award className="w-4 h-4 text-purple-400" />,
-  },
-  {
-    category: "Testing & Process",
-    items: ["Manual Testing", "Test Cases", "Agile / Scrum", "Regression Testing", "JIRA"],
-    icon: <GraduationCap className="w-4 h-4 text-pink-400" />,
-  },
+const workflow = ["Discover", "Architect", "Build", "Integrate", "Test", "Ship"];
+
+const disciplines = [
+  { icon: Layers3, label: "Product UI", value: "Mobile-first workflows", level: "94%" },
+  { icon: Braces, label: "Engineering", value: "State, API & architecture", level: "90%" },
+  { icon: ShieldCheck, label: "Quality", value: "Edge cases & release confidence", level: "86%" },
 ];
 
-const techHighlights = [
-  { name: "Flutter", color: "bg-sky-500" },
-  { name: "React Native", color: "bg-blue-500" },
-  { name: "TypeScript", color: "bg-blue-600" },
-  { name: "REST APIs", color: "bg-green-500" },
-  { name: "Mendix", color: "bg-orange-500" },
-  { name: "Firebase", color: "bg-yellow-500" },
-  { name: "BLoC", color: "bg-purple-500" },
-  { name: "Git", color: "bg-orange-600" },
-];
-
-// Interactive scroll-revealed counter component
-function InViewCounter({ value, duration = 1500, suffix = "" }: { value: number; duration?: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    let startTime: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(progress * value);
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
-  }, [isInView, value, duration]);
-
-  return <span ref={ref}>{Math.floor(count)}{suffix}</span>;
-}
+const stack = ["React Native", "Flutter", "TypeScript", "Next.js", "React Query", "Zustand", "REST APIs", "Firebase"];
 
 export default function About() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Motion values for mouse tracking
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  
-  // Smooth spring physics for 3D tilt
-  const springConfig = { damping: 25, stiffness: 120 };
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [12, -12]), springConfig);
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-12, 12]), springConfig);
-  
-  // Counter-tilt for deep background glow to create depth
-  const glowX = useSpring(useTransform(x, [-0.5, 0.5], [-25, 25]), springConfig);
-  const glowY = useSpring(useTransform(y, [-0.5, 0.5], [-25, 25]), springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
-    x.set(mouseX / width);
-    y.set(mouseY / height);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
-    <section id="about" className="py-24 sm:py-32 relative overflow-hidden">
-      {/* Dynamic Background SVG tech connections to eliminate whitespace */}
-      <svg 
-        className="absolute inset-0 w-full h-full stroke-indigo-500/10 dark:stroke-indigo-500/5 fill-none pointer-events-none z-0" 
-        viewBox="0 0 1200 800" 
-        preserveAspectRatio="none"
-      >
-        <path d="M 0,400 Q 300,500 600,400 T 1200,400" strokeWidth="1" strokeDasharray="5, 10" />
-        <path d="M 150,100 L 250,200 L 100,300" strokeWidth="0.75" strokeDasharray="3, 6" />
-        <path d="M 1050,700 L 950,600 L 1100,500" strokeWidth="0.75" strokeDasharray="3, 6" />
-      </svg>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-16 items-center">
-          {/* Left: Interactive Visual - 5 cols */}
-          <div className="lg:col-span-5 flex justify-center items-center">
-            <AnimatedSection direction="right" className="relative">
-              <div 
-                ref={containerRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                className="relative group cursor-pointer py-8 px-4"
-                style={{ perspective: "1000px" }}
-              >
-                {/* Pulsating Glowing Backdrop */}
-                <motion.div
-                  className="absolute inset-0 m-auto w-84 h-84 sm:w-[440px] sm:h-[440px] rounded-full blur-[60px] opacity-40 dark:opacity-50 -z-10 pointer-events-none"
-                  style={{
-                    x: glowX,
-                    y: glowY,
-                    backgroundImage: "conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1)",
-                  }}
-                  animate={{ 
-                    rotate: 360,
-                    scale: [0.95, 1.05, 0.95]
-                  }}
-                  transition={{ 
-                    rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                    scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }
-                  }}
-                />
-
-                {/* Image Container with Custom Glow Shadows */}
-                <motion.div
-                  style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                  className="relative w-76 h-76 sm:w-[380px] sm:h-[380px] mx-auto rounded-full overflow-hidden shadow-[0_0_35px_rgba(99,102,241,0.3)] dark:shadow-[0_0_65px_rgba(168,85,247,0.45)] transition-all duration-500 hover:shadow-[0_0_85px_rgba(168,85,247,0.65)]"
-                >
-                  <img
-                    src="/avatar.jpg"
-                    alt="NAD Avatar"
-                    className="w-full h-full rounded-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:rotate-1"
-                  />
-                  
-                  {/* Vignette */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-b from-transparent via-black/10 to-black/60 opacity-80 pointer-events-none" />
-                </motion.div>
-
-                {/* Floating Glassmorphic Tech highlights */}
-                {techHighlights.slice(0, 4).map((tech, i) => (
-                  <motion.div
-                    key={tech.name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    animate={{ 
-                      y: [0, -6, 0],
-                    }}
-                    style={{
-                      top: `${12 + i * 22}%`,
-                      right: i % 2 === 0 ? "-5%" : "auto",
-                      left: i % 2 !== 0 ? "-5%" : "auto",
-                    }}
-                    className="absolute z-10 backdrop-blur-md bg-white/5 dark:bg-[#0d0c15]/40 border border-white/10 dark:border-white/5 rounded-2xl shadow-xl px-3.5 py-1.5 text-[10px] font-bold text-foreground flex items-center gap-1.5 hover:bg-white/10 dark:hover:bg-neutral-900/60 transition-colors"
-                  >
-                    <span className="relative flex h-2 w-2">
-                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${tech.color}`} />
-                      <span className={`relative inline-flex rounded-full h-2 w-2 ${tech.color}`} />
-                    </span>
-                    {tech.name}
-                  </motion.div>
-                ))}
-              </div>
-            </AnimatedSection>
+    <section id="about" className="engineering-section border-y border-white/5 py-16 sm:py-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <AnimatedSection className="mb-9 grid gap-5 sm:mb-12 sm:gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="section-kicker">engineering-profile</p>
+            <h2 className="mt-4 text-3xl font-black tracking-[-0.05em] text-white sm:text-5xl">
+              More than screens.
+              <span className="block text-gradient text-gradient-live">I build the system behind them.</span>
+            </h2>
           </div>
+          <p className="max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
+            I work across the full product loop: understanding operational problems, shaping interfaces,
+            integrating APIs, managing state, testing edge cases, and improving the experience after release.
+          </p>
+        </AnimatedSection>
 
-          {/* Right: Content - 7 cols */}
-          <div className="lg:col-span-7">
+        <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+          <AnimatedSection direction="right">
+            <article className="profile-console relative h-full min-h-[430px] overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a13] sm:min-h-[500px] sm:rounded-[2rem]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(99,102,241,0.18),transparent_42%)]" />
+              <div className="profile-grid absolute inset-0 opacity-60" />
+              <div className="relative flex items-center justify-between border-b border-white/8 px-5 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                <span>developer.profile</span>
+                <span className="flex items-center gap-2 text-emerald-300"><i className="status-pulse size-1.5 rounded-full bg-emerald-400" /> ready</span>
+              </div>
+              <div className="relative mx-auto mt-8 size-40 sm:mt-10 sm:size-52">
+                <div className="portrait-ring portrait-ring-one absolute left-1/2 top-1/2 size-44 -translate-x-1/2 -translate-y-1/2 rounded-full border border-indigo-300/20 sm:size-56" />
+                <div className="portrait-ring portrait-ring-two absolute left-1/2 top-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-violet-300/15 sm:size-72" />
+                <div className="relative size-full overflow-hidden rounded-full border border-white/15 bg-[#10101d]">
+                  <Image src="/avatar.jpg" alt="Nguyen Anh Duy" fill className="object-cover object-top" sizes="208px" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/60 to-transparent" />
+                </div>
+              </div>
+              <div className="relative px-4 pb-5 pt-8 sm:px-6 sm:pb-6 sm:pt-11">
+                <div className="mb-6 text-center">
+                  <h3 className="text-2xl font-black tracking-tight text-white">Nguyen Anh Duy</h3>
+                  <p className="mt-2 break-words font-mono text-[10px] text-indigo-300 sm:text-xs">mobile_developer + product_engineer</p>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {["Mobile", "Frontend", "Quality"].map((item, index) => (
+                    <div key={item} className="rounded-xl border border-white/8 bg-black/25 p-3 text-center">
+                      <p className="font-mono text-[10px] text-zinc-500">0{index + 1}</p>
+                      <p className="mt-1 text-xs font-bold text-zinc-200">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          </AnimatedSection>
+
+          <div className="grid gap-5">
             <AnimatedSection>
-              <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
-                About Me
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
-                Mobile Developer
-                <br />
-                <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Who Ships Great Experiences
-                </span>
-              </h2>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.1}>
-              <div className="space-y-4 text-muted-foreground leading-relaxed mb-8 text-sm sm:text-base">
-                <p>
-                  I&apos;m a passionate programmer with a strong foundation in mobile and web development. I graduated with a <strong className="text-foreground">Bachelor of Science in Computing</strong> from FPT Greenwich University and have spent 2+ years honing my craft in the industry.
-                </p>
-                <p>
-                  I specialize in <strong className="text-foreground">Flutter and React Native</strong> for cross-platform mobile development, with solid experience in state management (Provider, BLoC) and REST API integration. I also have hands-on experience with front-end web development using Mendix for enterprise clients.
-                </p>
-                <p>
-                  Beyond coding, I bring a unique edge from my time as a QA Tester — giving me a sharp eye for detail, clean code quality, and user experience. I thrive in collaborative environments and enjoy solving complex problems with simple, maintainable solutions.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* Stats row with Dynamic In-View Counting */}
-            <AnimatedSection delay={0.15}>
-              <div className="grid grid-cols-3 gap-4 mb-8">
-                {[
-                  { value: 2, suffix: "+", label: "Years Experience", colors: "from-cyan-400 to-indigo-500" },
-                  { value: 3, suffix: "", label: "Companies", colors: "from-indigo-400 to-purple-500" },
-                  { value: 10, suffix: "+", label: "Projects Shipped", colors: "from-purple-400 to-pink-500" },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center p-4.5 rounded-2xl bg-zinc-950/20 dark:bg-[#0c0a15]/30 border border-zinc-200/5 dark:border-zinc-800/60 backdrop-blur-xl hover:border-indigo-500/20 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.15)]">
-                    <div className={`text-2xl sm:text-3xl font-black bg-gradient-to-r ${stat.colors} bg-clip-text text-transparent font-mono`}>
-                      <InViewCounter value={stat.value} suffix={stat.suffix} />
-                    </div>
-                    <div className="text-[9px] sm:text-[10px] text-zinc-400 mt-2 font-bold font-mono tracking-wider uppercase">{stat.label}</div>
+              <article className="workflow-panel overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.025] p-5 sm:p-6">
+                <div className="mb-7 flex items-center justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">{"// delivery-pipeline"}</p>
+                    <h3 className="mt-2 text-lg font-bold text-white">From problem to production</h3>
                   </div>
-                ))}
-              </div>
+                  <Rocket className="size-5 text-indigo-300" />
+                </div>
+                <div className="workflow-track grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {workflow.map((item, index) => (
+                    <div key={item} className="workflow-step relative rounded-xl border border-white/8 bg-black/20 px-3 py-3">
+                      <span className="font-mono text-[9px] text-indigo-300">step_0{index + 1}</span>
+                      <p className="mt-1 text-xs font-bold text-zinc-200">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
             </AnimatedSection>
 
-            {/* Skills grid with elevated micro-glow cards */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {skills.map((group, i) => (
-                <AnimatedSection key={group.category} delay={0.2 + i * 0.05}>
-                  <div className="p-5 rounded-2xl bg-zinc-950/20 dark:bg-[#0c0a15]/30 border border-zinc-200/5 dark:border-zinc-800/60 hover:border-indigo-500/30 dark:hover:border-indigo-500/40 backdrop-blur-xl transition-all duration-300 group hover:shadow-[0_12px_30px_rgba(99,102,241,0.08)]">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-indigo-500/5 border border-indigo-500/20 group-hover:scale-105 group-hover:border-indigo-500/40 transition-all duration-300">
-                        {group.icon}
+            <div className="grid gap-5 sm:grid-cols-[1.15fr_0.85fr]">
+              <AnimatedSection delay={0.06}>
+                <article className="h-full rounded-[2rem] border border-white/10 bg-white/[0.025] p-5">
+                  <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Capability matrix</p>
+                  <div className="space-y-5">
+                    {disciplines.map((item) => (
+                      <div key={item.label}>
+                        <div className="mb-2 flex items-center gap-3">
+                          <item.icon className="size-4 text-indigo-300" />
+                          <div className="min-w-0 flex-1">
+                            <div className="flex justify-between gap-3 text-xs"><b className="text-zinc-200">{item.label}</b><span className="font-mono text-zinc-600">{item.level}</span></div>
+                            <p className="mt-0.5 truncate text-[10px] text-zinc-500">{item.value}</p>
+                          </div>
+                        </div>
+                        <div className="h-1 overflow-hidden rounded-full bg-white/5"><span className="capability-meter block h-full rounded-full" style={{ width: item.level }} /></div>
                       </div>
-                      <h4 className="font-bold text-sm sm:text-base text-zinc-100 group-hover:text-indigo-400 transition-colors duration-300">
-                        {group.category}
-                      </h4>
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {group.items.map((skill) => (
-                        <span
-                          key={skill}
-                          className="text-[10px] sm:text-xs px-2.5 py-1 rounded-lg bg-zinc-900/40 dark:bg-zinc-950/40 border border-zinc-200/5 dark:border-zinc-800/60 text-zinc-400 group-hover:text-zinc-200 group-hover:border-indigo-500/10 hover:!border-indigo-500/30 hover:!text-indigo-400 transition-all duration-300 cursor-default"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
+                    ))}
                   </div>
-                </AnimatedSection>
-              ))}
+                </article>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.1}>
+                <article className="stack-orbit relative h-full min-h-64 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b0b15] p-5">
+                  <p className="relative z-10 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Core stack</p>
+                  <div className="relative z-10 mt-7 flex flex-wrap gap-2">
+                    {stack.map((item) => <span key={item} className="stack-chip rounded-lg border border-white/8 bg-black/30 px-2.5 py-1.5 font-mono text-[10px] text-zinc-400">{item}</span>)}
+                  </div>
+                  <div className="absolute bottom-5 left-5 right-5 flex items-center gap-2 font-mono text-[10px] text-emerald-300">
+                    <span className="status-pulse size-1.5 rounded-full bg-emerald-400" /> continuously learning <ArrowRight className="ml-auto size-3" />
+                  </div>
+                </article>
+              </AnimatedSection>
             </div>
           </div>
         </div>
