@@ -430,13 +430,22 @@ export default function PortfolioExperience() {
 }
 
 function ProductKernel({ active, onSelect }: { active: number; onSelect: (index: number) => void }) {
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (paused || reduceMotion) return;
+    const timer = window.setTimeout(() => onSelect((active + 1) % approachSteps.length), 2800);
+    return () => window.clearTimeout(timer);
+  }, [active, onSelect, paused, reduceMotion]);
+
   const inspectApproach = (index: number) => {
     onSelect(index);
     document.getElementById("approach")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <div className={styles.kernelStage}>
+    <div className={styles.kernelStage} onPointerEnter={() => setPaused(true)} onPointerLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
       <span className={styles.kernelGuide}>{"// select a stage · click again to inspect"}</span>
       <span className={styles.systemMap}>
         <i className={styles.systemPath} />
